@@ -16,8 +16,8 @@ package frc.robot;
 public class RobotMap{
   //used to map out the pins aka ports used by different parts of the robot
   //PWM
-  public static final int[] leftMotors = {5, 6, 7};
-  public static final int[] rightMotors = {2, 3, 4};
+  public static final int[] leftMotors = {1, 2, 3};
+  public static final int[] rightMotors = {4, 5};
   public static final int armPotentiometer = 0;
 
   //DIO

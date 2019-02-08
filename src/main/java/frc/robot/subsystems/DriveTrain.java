@@ -15,9 +15,8 @@ import frc.robot.utils.DashboardVariable;
 
 public class DriveTrain extends Subsystem{
 
-    public Encoder leftEnc;
+    public Encoder leftEnc, rightEnc;
     public int wheelSize = 6;
-    public Encoder rightEnc;
     public double distancePerPulse;
     public double pulsesPerRev = 20.0;
     public DifferentialDrive m_myRobot;
@@ -48,14 +47,14 @@ public class DriveTrain extends Subsystem{
 		rightEnc.setSamplesToAverage(7);
         rightEnc.reset();
         
+        // links the 3 left motor controllers together, and 2 right motor controllers together
         SpeedControllerGroup leftGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.leftMotors[0]),new PWMVictorSPX(RobotMap.leftMotors[1]), new PWMVictorSPX(RobotMap.leftMotors[2]));
-        SpeedControllerGroup rightGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.rightMotors[0]), new PWMVictorSPX(RobotMap.rightMotors[1]), new PWMVictorSPX(RobotMap.rightMotors[2]));
+        SpeedControllerGroup rightGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.rightMotors[0]), new PWMVictorSPX(RobotMap.rightMotors[1]));
 
         drivePIDLeft = new PIDController(0.02, 0.0, 0.02, leftEnc, leftGroup);
         drivePIDRight = new PIDController(0.02, 0.0, 0.02, rightEnc, rightGroup);
 
         leftGroup.setInverted(true);
-        rightGroup.setInverted(true);
         //initialize the drive train
         m_myRobot = new DifferentialDrive(leftGroup, rightGroup);
                 
