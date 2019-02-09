@@ -27,12 +27,12 @@ public class DriveTrain extends Subsystem{
     public final static Double wheelNonLinearity = 0.65;
     public final static int wheelDistance = 23;
     public static double error = 0;
-    public static final double quickTurnSpeed = 5.0;
+    public static final double quickTurnSpeed = 0.3;
 
     //drive straight variables
     public double speedL, speedR, speedMod = 1.0;
     public boolean onTarget;
-    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", true);
+    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", false);
     
     public static final DashboardVariable<Double> driveP = new DashboardVariable<Double>("DriveP", 0.02);
 	public static final DashboardVariable<Double> driveI = new DashboardVariable<Double>("DriveI", 0.02);
@@ -143,7 +143,7 @@ public class DriveTrain extends Subsystem{
         
         //make quick turn true when the speed is slow
         if(Math.abs(linearPower)<quickTurnSpeed){
-            quickTurn = true;
+           quickTurn = true;
         }
 
         angularPower = wheel;
@@ -161,15 +161,17 @@ public class DriveTrain extends Subsystem{
         double pwmLeft;
         double pwmRight;
 
+        System.out.println(angularPower);
+
         pwmLeft = pwmRight = linearPower;
-        pwmLeft += angularPower;  //add drive straight to hopefully make the robot straight
-        pwmRight -= angularPower; //subtract drive straight to hopefully make the robot straight
+        pwmLeft += angularPower;  
+        pwmRight -= angularPower; 
 
         if(driveStraightOn.get()){
             Robot.driveTrain.m_myRobot.tankDrive(pwmLeft * driveStraightPercentLeft(pwmLeft), pwmRight * driveStraightPercentright(pwmRight));
         }
         else{
-            Robot.driveTrain.m_myRobot.tankDrive(pwmLeft, pwmRight, quickTurn);
+            Robot.driveTrain.m_myRobot.tankDrive(pwmLeft, pwmRight);
         }
     }
 
