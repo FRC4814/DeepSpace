@@ -12,20 +12,25 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.HaloDriveCommand;
 import frc.robot.utils.DashboardVariable;
+import frc.robot.Robot;
 
 public class DriveTrain extends Subsystem{
 
-    public Encoder leftEnc, rightEnc;
+    public static Encoder leftEnc, rightEnc;
     public int wheelSize = 6;
-    public double distancePerPulse;
     public double pulsesPerRev = 20.0;
+    public double distancePerPulse = (wheelSize * Math.PI) / (pulsesPerRev);
     public DifferentialDrive m_myRobot;
     public PIDController drivePIDLeft, drivePIDRight;
+
+    // make the controllers grouped together so their speeds can be changed together
+    public SpeedControllerGroup leftGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.leftMotors[0]),new PWMVictorSPX(RobotMap.leftMotors[1]), new PWMVictorSPX(RobotMap.leftMotors[2]));
+    public SpeedControllerGroup rightGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.rightMotors[0]), new PWMVictorSPX(RobotMap.rightMotors[1]));
     
     //change to dashboard variable!
     public static final DashboardVariable<Double> driveP = new DashboardVariable("DriveP", 0.02);
 	public static final DashboardVariable<Double> driveI = new DashboardVariable("DriveI", 0.02);
-	public static final DashboardVariable<Double> driveD = new DashboardVariable("DriveD", 0.02);
+    public static final DashboardVariable<Double> driveD = new DashboardVariable("DriveD", 0.02);
 
     public DriveTrain(){
         //initialize the encoders
@@ -55,15 +60,15 @@ public class DriveTrain extends Subsystem{
         drivePIDRight = new PIDController(0.02, 0.0, 0.02, rightEnc, rightGroup);
 
         leftGroup.setInverted(true);
+        rightGroup.setInverted(true);
         //initialize the drive train
         m_myRobot = new DifferentialDrive(leftGroup, rightGroup);
-                
-        //calculate distance per pulse
-        distancePerPulse = (wheelSize * Math.PI) / (pulsesPerRev);
-        
-        //set distance per pulse for encoders
-        leftEnc.setDistancePerPulse(distancePerPulse);
-        rightEnc.setDistancePerPulse(distancePerPulse);
+    }
+
+    public static double driveStraight() {
+        double error = leftEnc.getDistance() - rightEnc.getDistance();
+        double turnPower = driveP.get() * error;
+        return turnPower;
     }
 
     public void startPID(){
@@ -73,12 +78,17 @@ public class DriveTrain extends Subsystem{
 
     public void updatePID(){
         drivePIDLeft.setPID(driveP.get(), driveI.get(), driveD.get());   
-        drivePIDRight.setPID(driveP.get(), driveI.get(), driveD.get());    
+        drivePIDRight.setPID(driveP.get(), driveI.get(), driveD.get());
     }
 
     public void disablePID(){
         drivePIDLeft.disable();
         drivePIDRight.disable();
+    }
+
+    public void setSpeed(double speedLeft, double speedRight) {
+        leftGroup.set(speedLeft);
+        rightGroup.set(speedRight);
     }
 
     @Override
@@ -90,5 +100,12 @@ public class DriveTrain extends Subsystem{
     public static void ArcadeDrive(){
         Robot.driveTrain.m_myRobot.arcadeDrive(Robot.m_oi.myController.getY(Hand.kLeft), Robot.m_oi.myController.getX(Hand.kRight));
     }
-
+/*
+    public static void curvDrive(boolean quickTurn, double wheel, double throttle) {
+        // calculate radius
+        final Double denominator = Math.sin(Math.PI/2.0 * wheelNonLinearity);
+        // calculate needed motor speed
+        Robot.driveTrain.m_myRobot.tankDrive(pwmLeft, pwmRight, rightSpeed);
+    }
+*/
 }
