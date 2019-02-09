@@ -16,8 +16,7 @@ public class DashboardVariable<T>
 	protected String name;
 	protected T defaultValue;
 
-	public DashboardVariable(String name, T defaultValue)
-	{
+	public DashboardVariable(String name, T defaultValue){
 		this.name = name;
 		this.defaultValue = defaultValue;
 
