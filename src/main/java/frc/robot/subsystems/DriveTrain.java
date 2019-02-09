@@ -15,9 +15,9 @@ import frc.robot.utils.DashboardVariable;
 
 public class DriveTrain extends Subsystem{
 
-    public Encoder leftEnc;
+    public static Encoder leftEnc;
     public int wheelSize = 6;
-    public Encoder rightEnc;
+    public static Encoder rightEnc;
     public double distancePerPulse;
     public double pulsesPerRev = 20.0;
     public DifferentialDrive m_myRobot;
@@ -27,6 +27,7 @@ public class DriveTrain extends Subsystem{
     public final static Double wheelNonLinearity = 0.65;
     public final static int wheelDistance = 23;
     public static double error;
+    public static final double quickTurnSpeed = 5.0;
 
     
     public static final DashboardVariable<Double> driveP = new DashboardVariable("DriveP", 0.02);
@@ -87,7 +88,7 @@ public class DriveTrain extends Subsystem{
     }
 
     public static double driveStraight(){
-        error = drivePIDLeft.get() - drivePIDRight.get();
+        error = leftEnc.getDistance() - rightEnc.getDistance();
         double turnPower = driveP.get() * error;
         return turnPower;
     }
@@ -98,19 +99,28 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new HaloDriveCommand());
     }
 
-    public static void curvDrive(boolean quickTurn, double wheel, double throttle){
+    public static void curvDrive(double wheel, double throttle){
+        boolean quickTurn = false;
         //calculate radius
         final Double denominator = Math.sin(Math.PI /2.0 * wheelNonLinearity);
         wheel = Math.sin(Math.PI /2.0 *wheelNonLinearity * wheel ) / denominator;
         //calculate the needed motor speed
         double angularPower;
         double linearPower = throttle;
+        if(Math.abs(linearPower)<quickTurnSpeed){
+            quickTurn = true;
+        }
+
         angularPower = wheel;
+        if(throttle<0){
+            wheel = -wheel;
+        }
+
         //check if driver needs to turn quickly
         if(!quickTurn){
            angularPower = throttle * wheel * 0.65;
         }
-        
+
         //drive the left/right motors
         double pwmLeft;
         double pwmRight;
@@ -123,7 +133,6 @@ public class DriveTrain extends Subsystem{
         Robot.driveTrain.m_myRobot.tankDrive(pwmLeft, pwmRight, quickTurn);
 
     }
-
 
     //finds the velocity of the robot
     public double getLinearVelocity(){

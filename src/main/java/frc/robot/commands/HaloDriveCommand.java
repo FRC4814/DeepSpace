@@ -20,9 +20,7 @@ public class HaloDriveCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.driveTrain.startPID();
-        Robot.driveTrain.ArcadeDrive();
-        
+        DriveTrain.curvDrive(Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getY(Hand.kLeft));
     }
 
     // Make this return true when this Command no longer needs to run execute()
