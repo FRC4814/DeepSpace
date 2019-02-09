@@ -20,6 +20,7 @@ public class HaloDriveCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        // curve drive from 254
         Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getBumper(Hand.kLeft));
         //DriveTrain.curvDrive(Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getY(Hand.kLeft));
     }

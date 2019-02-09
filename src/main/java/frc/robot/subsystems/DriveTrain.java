@@ -5,10 +5,8 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.HaloDriveCommand;
 import frc.robot.utils.DashboardVariable;
@@ -88,6 +86,14 @@ public class DriveTrain extends Subsystem{
         drivePIDRight.disable();
     }
 
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        setDefaultCommand(new HaloDriveCommand());
+    }
+
+// Methods for CurveDrive that were replaced in HaloDriveCommand by built-in command
+/*
     public static double getLeftError(){
         double leftError = leftEnc.getDistance() - rightEnc.getDistance();
         return leftError;
@@ -123,13 +129,8 @@ public class DriveTrain extends Subsystem{
         }
         return 1;
     }
-
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new HaloDriveCommand());
-    }
-
+*/
+    /*
     public static void curvDrive(double wheel, double throttle){
         boolean quickTurn = false;
         //calculate radius
@@ -145,10 +146,10 @@ public class DriveTrain extends Subsystem{
         }
 
         angularPower = wheel;
-        /*if(throttle<0){
+        if(throttle<0){
             wheel = -wheel;
         }
-        */
+        
 
         //check if driver needs to turn quickly
         if(!quickTurn){
@@ -185,5 +186,6 @@ public class DriveTrain extends Subsystem{
     public static void ArcadeDrive(){
         Robot.driveTrain.m_myRobot.arcadeDrive(Robot.m_oi.myController.getY(Hand.kLeft), -Robot.m_oi.myController.getX(Hand.kRight));
     }
+    */
 
 }
