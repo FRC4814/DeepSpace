@@ -8,6 +8,7 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DriveTrain;
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
     DashboardVariable.initDefaultVariables();
+    CameraServer.getInstance().startAutomaticCapture();
    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
