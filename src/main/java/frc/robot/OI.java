@@ -26,7 +26,7 @@ public class OI {
 
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
-      myController.setDeadzone(0.09);
+      myController.setDeadzone(0.1);
     }
 
     

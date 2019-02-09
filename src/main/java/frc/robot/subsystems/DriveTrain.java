@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.HaloDriveCommand;
 import frc.robot.utils.DashboardVariable;
@@ -65,6 +67,7 @@ public class DriveTrain extends Subsystem{
         drivePIDRight = new PIDController(0.02, 0.0, 0.02, rightEnc, rightGroup);
 
         leftGroup.setInverted(true);
+        rightGroup.setInverted(true);
         //initialize the drive train
         m_myRobot = new DifferentialDrive(leftGroup, rightGroup);
                 
@@ -86,14 +89,6 @@ public class DriveTrain extends Subsystem{
         drivePIDRight.disable();
     }
 
-    @Override
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        setDefaultCommand(new HaloDriveCommand());
-    }
-
-// Methods for CurveDrive that were replaced in HaloDriveCommand by built-in command
-/*
     public static double getLeftError(){
         double leftError = leftEnc.getDistance() - rightEnc.getDistance();
         return leftError;
@@ -104,7 +99,7 @@ public class DriveTrain extends Subsystem{
         return rightError;
     }
 
-    public static double driveStraightPercentLeft(double leftSpeed){
+    public static double driveStraightPercentLeft(){
         double rightDistance = rightEnc.getDistance();
         double leftDistance = leftEnc.getDistance();
 
@@ -116,8 +111,13 @@ public class DriveTrain extends Subsystem{
         }
         return 1;
     }
+    public static double drivestraightPercent(){
+        double percent;
+        percent = driveStraightPercentLeft() - driveStraightPercentright();
+        return percent;
+    }
 
-    public static double driveStraightPercentright(double rightSpeed){
+    public static double driveStraightPercentright(){
         double rightDistance = rightEnc.getDistance();
         double leftDistance = leftEnc.getDistance();
 
@@ -129,63 +129,25 @@ public class DriveTrain extends Subsystem{
         }
         return 1;
     }
-*/
-    /*
-    public static void curvDrive(double wheel, double throttle){
-        boolean quickTurn = false;
-        //calculate radius
-        final Double denominator = Math.sin(Math.PI /2.0 * wheelNonLinearity);
-        wheel = Math.sin(Math.PI /2.0 *wheelNonLinearity * wheel ) / denominator;
-        
-        double angularPower;
-        double linearPower = throttle;
-        
-        //make quick turn true when the speed is slow
-        if(Math.abs(linearPower)<quickTurnSpeed){
-           quickTurn = true;
-        }
 
-        angularPower = wheel;
-        if(throttle<0){
-            wheel = -wheel;
-        }
-        
+    @Override
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        setDefaultCommand(new HaloDriveCommand());
+    }
 
-        //check if driver needs to turn quickly
-        if(!quickTurn){
-           angularPower = throttle * wheel * 0.65;
-        }
-
-        //drive the left/right motors
-        double pwmLeft;
-        double pwmRight;
-
-        System.out.println(angularPower);
-
-        pwmLeft = pwmRight = linearPower;
-        pwmLeft += angularPower;  
-        pwmRight -= angularPower; 
-
+    public static void curvDrive(){
+        System.out.println(drivestraightPercent());
         if(driveStraightOn.get()){
-            Robot.driveTrain.m_myRobot.tankDrive(pwmLeft * driveStraightPercentLeft(pwmLeft), pwmRight * driveStraightPercentright(pwmRight));
+            Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), Robot.m_oi.myController.getBumper(Hand.kLeft));
         }
         else{
-            Robot.driveTrain.m_myRobot.tankDrive(pwmLeft, pwmRight);
+            Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getBumper(Hand.kLeft));
         }
-    }
-
-    //finds the velocity of the robot
-    public double getLinearVelocity(){
-        return (leftEnc.getDistance() + rightEnc.getDistance())/2;
-    }
-
-    public double getAngularVelocity(){
-        return (leftEnc.getDistance() - rightEnc.getDistance()) / wheelDistance;
     }
 
     public static void ArcadeDrive(){
         Robot.driveTrain.m_myRobot.arcadeDrive(Robot.m_oi.myController.getY(Hand.kLeft), -Robot.m_oi.myController.getX(Hand.kRight));
     }
-    */
 
 }
