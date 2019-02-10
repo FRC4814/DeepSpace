@@ -7,8 +7,13 @@
 
 package frc.robot;
 
+import com.sun.java.swing.ui.ToggleActionPropertyChangeListener;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.commands.HaloDriveCommand;
+import frc.robot.commands.TogglePusherSolenoidCommand;
+import frc.robot.commands.ToggleSliderSolenoidCommand;
 import frc.robot.utils.CustomXboxController;
 import frc.robot.utils.XboxButton;
 import frc.robot.utils.XboxControllerButton;
@@ -33,6 +38,9 @@ public class OI {
 
       Button push = new XboxControllerButton(myController, XboxButton.kButtonB);
       Button slide = new XboxControllerButton(myController, XboxButton.kButtonA);
+
+      slide.whileHeld(new ToggleSliderSolenoidCommand(true));
+      push.whileHeld(new TogglePusherSolenoidCommand(true));
     }
 
     
