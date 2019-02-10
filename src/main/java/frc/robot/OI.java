@@ -36,11 +36,11 @@ public class OI {
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.2);
 
-      Button push = new XboxControllerButton(myController, XboxButton.kButtonB);
-      Button slide = new XboxControllerButton(myController, XboxButton.kButtonA);
+      Button pushPresetB = new XboxControllerButton(myController, XboxButton.kButtonB);
+      Button slidePresetA = new XboxControllerButton(myController, XboxButton.kButtonA);
 
-      slide.whileHeld(new ToggleSliderSolenoidCommand(true));
-      push.whileHeld(new TogglePusherSolenoidCommand(true));
+      slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(true));
+      pushPresetB.whileHeld(new TogglePusherSolenoidCommand(true));
     }
 
     
