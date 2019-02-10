@@ -14,7 +14,7 @@ import frc.robot.commands.HaloDriveCommand;
 import frc.robot.utils.DashboardVariable;
 
 public class DriveTrain extends Subsystem{
-
+    //encoder and drive stuff
     public static Encoder leftEnc, rightEnc;
     public int wheelSize = 6;
     public double distancePerPulse;
@@ -31,8 +31,9 @@ public class DriveTrain extends Subsystem{
     //drive straight variables
     public double speedL, speedR, speedMod = 1.0;
     public boolean onTarget;
-    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", false);
+    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", true);
     
+    //entering the P, I, and D variables to dashboard
     public static final DashboardVariable<Double> driveP = new DashboardVariable<Double>("DriveP", 0.02);
 	public static final DashboardVariable<Double> driveI = new DashboardVariable<Double>("DriveI", 0.02);
 	public static final DashboardVariable<Double> driveD = new DashboardVariable<Double>("DriveD", 0.02);
@@ -50,7 +51,7 @@ public class DriveTrain extends Subsystem{
 		leftEnc.setDistancePerPulse(distancePerPulse);
 		leftEnc.setSamplesToAverage(7);
         leftEnc.reset();
-        
+    
         rightEnc = new Encoder(RobotMap.rightEncoders[0], RobotMap.rightEncoders[1], false, Encoder.EncodingType.k4X);
         rightEnc.setName(this.getName(), "EncoderR");
 		rightEnc.setPIDSourceType(PIDSourceType.kDisplacement);
@@ -66,6 +67,7 @@ public class DriveTrain extends Subsystem{
         drivePIDLeft = new PIDController(0.02, 0.0, 0.02, leftEnc, leftGroup);
         drivePIDRight = new PIDController(0.02, 0.0, 0.02, rightEnc, rightGroup);
 
+        //inverts the motors otherwise they go backwards
         leftGroup.setInverted(true);
         rightGroup.setInverted(true);
         //initialize the drive train
@@ -73,7 +75,6 @@ public class DriveTrain extends Subsystem{
                 
         
     }
-
     public void startPID(){
         drivePIDLeft.enable();
         drivePIDRight.enable();
@@ -88,7 +89,7 @@ public class DriveTrain extends Subsystem{
         drivePIDLeft.disable();
         drivePIDRight.disable();
     }
-
+    //resets encoders (duh)
     public void resetEncoders(){
         leftEnc.reset();
         rightEnc.reset();
@@ -103,7 +104,7 @@ public class DriveTrain extends Subsystem{
         double rightError = rightEnc.getDistance() - leftEnc.getDistance();
         return rightError;
     }
-
+    //drive straight for left side
     public static double driveStraightPercentLeft(){
         double rightDistance = rightEnc.getDistance();
         double leftDistance = leftEnc.getDistance();
@@ -116,12 +117,13 @@ public class DriveTrain extends Subsystem{
         }
         return 1;
     }
+    //main drive straight method
     public static double drivestraightPercent(){
         double percent;
         percent = driveStraightPercentLeft() - driveStraightPercentright();
         return percent;
     }
-
+    //drive straight for right side
     public static double driveStraightPercentright(){
         double rightDistance = rightEnc.getDistance();
         double leftDistance = leftEnc.getDistance();
@@ -142,21 +144,20 @@ public class DriveTrain extends Subsystem{
     }
 
     public static void curvDrive(){
+        //creates and inits the throttle and quickturn variables for quick turn logic
         double throttle = Robot.m_oi.myController.getY(Hand.kLeft);
         boolean isQuickTurn = false;
+        //quick turn logic
         if(Math.abs(throttle)<0.3 || Robot.m_oi.myController.getBumper(Hand.kLeft)){
             isQuickTurn = true;
         }
+        //checks if drivce straight is on or off
         if(driveStraightOn.get()){
             Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
         }
         else{
             Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
         }
-    }
-
-    public static void ArcadeDrive(){
-        Robot.driveTrain.m_myRobot.arcadeDrive(Robot.m_oi.myController.getY(Hand.kLeft), -Robot.m_oi.myController.getX(Hand.kRight));
     }
 
 }

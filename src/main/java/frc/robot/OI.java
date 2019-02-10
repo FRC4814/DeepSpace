@@ -30,6 +30,9 @@ public class OI {
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.2);
+
+      Button push = new XboxControllerButton(myController, XboxButton.kButtonB);
+      Button slide = new XboxControllerButton(myController, XboxButton.kButtonA);
     }
 
     

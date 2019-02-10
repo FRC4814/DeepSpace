@@ -12,11 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ToggleSliderSolenoidCommand extends Command {
-  private boolean isSlide;
-  public ToggleSliderSolenoidCommand(boolean isSlide) {
+  public ToggleSliderSolenoidCommand() {
     //This command pushes the hatch panel slider forward and/or back and locks it in place
     // eg. requires(chassis);
-    this.isSlide = isSlide;
   }
 
   // Called just before this Command runs the first time
@@ -27,7 +25,7 @@ public class ToggleSliderSolenoidCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(isSlide){
+    if(Robot.m_oi.myController.getAButton()){
       Robot.sliderSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else{
