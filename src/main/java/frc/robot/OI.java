@@ -29,9 +29,7 @@ public class OI {
 
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
-      myController.setDeadzone(0.1);
-
-      Button presetStart = new XboxControllerButton(XboxButton.kButtonStart);
+      myController.setDeadzone(0.2);
     }
 
     

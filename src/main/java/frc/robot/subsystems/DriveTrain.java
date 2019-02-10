@@ -89,6 +89,11 @@ public class DriveTrain extends Subsystem{
         drivePIDRight.disable();
     }
 
+    public void resetEncoders(){
+        leftEnc.reset();
+        rightEnc.reset();
+    }
+
     public static double getLeftError(){
         double leftError = leftEnc.getDistance() - rightEnc.getDistance();
         return leftError;
@@ -136,13 +141,17 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new HaloDriveCommand());
     }
 
-    public void curvDrive(){
-        System.out.println(drivestraightPercent());
+    public static void curvDrive(){
+        double throttle = Robot.m_oi.myController.getY(Hand.kLeft);
+        boolean isQuickTurn = false;
+        if(Math.abs(throttle)<0.3 || Robot.m_oi.myController.getBumper(Hand.kLeft)){
+            isQuickTurn = true;
+        }
         if(driveStraightOn.get()){
-            Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), Robot.m_oi.myController.getBumper(Hand.kLeft));
+            Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
         }
         else{
-            Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getBumper(Hand.kLeft));
+            Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
         }
     }
 
