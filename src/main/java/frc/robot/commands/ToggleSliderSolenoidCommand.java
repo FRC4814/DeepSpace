@@ -31,7 +31,7 @@ public class ToggleSliderSolenoidCommand extends Command {
       Robot.sliderSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     else{
-      Robot.sliderSolenoid.set(DoubleSolenoid.Value.kForward);
+      Robot.sliderSolenoid.set(DoubleSolenoid.Value.kReverse);
 
     }
   }

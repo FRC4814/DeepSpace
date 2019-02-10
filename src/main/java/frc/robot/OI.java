@@ -38,10 +38,12 @@ public class OI {
       Button pushPresetB = new XboxControllerButton(myController, XboxButton.kButtonB);
       Button slidePresetA = new XboxControllerButton(myController, XboxButton.kButtonA);
       Button slidePresetX = new XboxControllerButton(myController, XboxButton.kButtonX);
+      Button pushPresetY = new XboxControllerButton(myController, XboxButton.kButtonY);
 
       slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(true));
       slidePresetX.whileHeld(new ToggleSliderSolenoidCommand(false));
       pushPresetB.whileHeld(new TogglePusherSolenoidCommand(true));
+      pushPresetY.whileHeld(new TogglePusherSolenoidCommand(false));
     }
 
     
