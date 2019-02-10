@@ -23,7 +23,7 @@ public class XboxControllerButton extends JoystickButton {
   }
 
   // old way of doing it
-  public XboxControllerButton(XboxController controller, XboxButton buttonNumber) {
+  public XboxControllerButton(CustomXboxController controller, XboxButton buttonNumber) {
     super(controller, buttonNumber.getValue());
   }
 
