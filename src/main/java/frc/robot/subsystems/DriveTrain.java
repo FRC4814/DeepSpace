@@ -89,6 +89,11 @@ public class DriveTrain extends Subsystem{
         drivePIDRight.disable();
     }
 
+    public void resetEncoders(){
+        leftEnc.reset();
+        rightEnc.reset();
+    }
+
     public static double getLeftError(){
         double leftError = leftEnc.getDistance() - rightEnc.getDistance();
         return leftError;
@@ -137,7 +142,6 @@ public class DriveTrain extends Subsystem{
     }
 
     public static void curvDrive(){
-        System.out.println(drivestraightPercent());
         double throttle = Robot.m_oi.myController.getY(Hand.kLeft);
         boolean isQuickTurn = false;
         if(Math.abs(throttle)<0.3 || Robot.m_oi.myController.getBumper(Hand.kLeft)){

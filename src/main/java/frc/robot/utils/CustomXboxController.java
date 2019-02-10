@@ -21,7 +21,11 @@ public class CustomXboxController extends XboxController
 	{
 		double val = super.getX(hand);
 		if (Math.abs(val) >= deadzone)
-			return val;
+			if(val>0.0){
+			return (val - deadzone) / (1.0 - deadzone);
+		} else {
+			return (val + deadzone) / (1.0 - deadzone);
+		}
 		return 0;
 	}
 
@@ -30,7 +34,11 @@ public class CustomXboxController extends XboxController
 	{
 		double val = super.getY(hand);
 		if (Math.abs(val) >= deadzone)
-			return val;
-		return 0;
-	}
+			if(val>0.0){
+			return (val - deadzone) / (1.0 - deadzone);
+		} else {
+			return (val + deadzone) / (1.0 - deadzone);
+		}
+	return 0;
+	}		
 }
