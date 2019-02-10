@@ -136,7 +136,7 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new HaloDriveCommand());
     }
 
-    public static void curvDrive(){
+    public void curvDrive(){
         System.out.println(drivestraightPercent());
         if(driveStraightOn.get()){
             Robot.driveTrain.m_myRobot.curvatureDrive(Robot.m_oi.myController.getY(Hand.kLeft),-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), Robot.m_oi.myController.getBumper(Hand.kLeft));

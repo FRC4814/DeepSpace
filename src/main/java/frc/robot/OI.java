@@ -8,7 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.utils.CustomXboxController;
+import frc.robot.utils.XboxButton;
+import frc.robot.utils.XboxControllerButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,12 +24,14 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   // Joystick stick = new Joystick(port);
-  public CustomXboxController myController;
+  public static CustomXboxController myController;
 
 
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.1);
+
+      Button presetStart = new XboxControllerButton(XboxButton.kButtonStart);
     }
 
     
