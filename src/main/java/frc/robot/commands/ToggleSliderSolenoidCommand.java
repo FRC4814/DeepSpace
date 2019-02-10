@@ -15,7 +15,6 @@ public class ToggleSliderSolenoidCommand extends Command {
   private boolean isSlide;
   public ToggleSliderSolenoidCommand(boolean isSlide) {
     //This command pushes the hatch panel slider forward and/or back and locks it in place
-    // eg. requires(chassis);
     this.isSlide = isSlide;
   }
 

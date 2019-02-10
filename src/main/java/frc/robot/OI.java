@@ -30,19 +30,20 @@ public class OI {
   // Joystick stick = new Joystick(port);
   public static CustomXboxController myController;
 
-
     public OI(){
+      // Map driving to the joysticks on the Xbox controller
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.2);
 
-      Button pushPresetB = new XboxControllerButton(myController, XboxButton.kButtonB);
-      Button slidePresetA = new XboxControllerButton(myController, XboxButton.kButtonA);
-      Button slidePresetX = new XboxControllerButton(myController, XboxButton.kButtonX);
-      Button pushPresetY = new XboxControllerButton(myController, XboxButton.kButtonY);
+      // Define all buttons and map them to their location on the controller here
+      Button pushPresetB = new XboxControllerButton(XboxButton.kButtonB);
+      Button slidePresetA = new XboxControllerButton(XboxButton.kButtonA);
+      Button slidePresetX = new XboxControllerButton(XboxButton.kButtonX);
 
+      // Map all buttons to their functions here
       slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(false));
       slidePresetX.whileHeld(new ToggleSliderSolenoidCommand(true));
-      pushPresetB.whenPressed(new TogglePusherSolenoidCommand(true));
+      pushPresetB.whenPressed(new TogglePusherSolenoidCommand());
       
     }
 

@@ -14,9 +14,8 @@ public class WaitCommand extends Command {
   private double seconds;
   private Timer timer;
 
+  // Tells robot to wait before running new commands
   public WaitCommand(double seconds) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     this.seconds = seconds;
     timer = new Timer();
   }
