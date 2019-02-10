@@ -28,7 +28,7 @@ public class TogglePusherSolenoidCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
+    Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
     /*
     if(isPush){
       Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
@@ -41,8 +41,8 @@ public class TogglePusherSolenoidCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.pusherSolenoid.get().equals(DoubleSolenoid.Value.kForward)) {
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
+    if (Robot.pusherSolenoid.get().equals(DoubleSolenoid.Value.kReverse)) {
+      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
       return true;
     }
 
