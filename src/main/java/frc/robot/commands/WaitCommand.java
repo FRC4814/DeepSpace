@@ -7,46 +7,35 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.commands.WaitCommand;
 
-public class TogglePusherSolenoidCommand extends Command {
-  private boolean isPush;
-  public TogglePusherSolenoidCommand(boolean isPush) {
-    // This command pushes hatch panels off of the slider and retracts automatically
+public class WaitCommand extends Command {
+  private double seconds;
+  private Timer timer;
+
+  public WaitCommand(double seconds) {
+    // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    this.isPush = isPush;
+    this.seconds = seconds;
+    timer = new Timer();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
-    /*
-    if(isPush){
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
-    }
-    else{
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }*/
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.pusherSolenoid.get().equals(DoubleSolenoid.Value.kForward)) {
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-      return true;
-    }
-
-    return false;
+    return timer.get() >= seconds;
   }
 
   // Called once after isFinished returns true
