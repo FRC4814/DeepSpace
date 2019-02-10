@@ -9,6 +9,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.commands.TogglePusherSolenoidCommand;
+import frc.robot.commands.ToggleSliderSolenoidCommand;
 import frc.robot.utils.CustomXboxController;
 import frc.robot.utils.XboxButton;
 import frc.robot.utils.XboxControllerButton;
@@ -30,6 +32,12 @@ public class OI {
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.2);
+
+      Button presetStart = new XboxControllerButton(XboxButton.kButtonStart);
+      Button presetBack = new XboxControllerButton(XboxButton.kButtonBack);
+
+      presetStart.whenPressed(new TogglePusherSolenoidCommand());
+      presetBack.whileHeld(new ToggleSliderSolenoidCommand());
     }
 
     
