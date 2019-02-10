@@ -7,12 +7,16 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class TogglePusherSolenoidCommand extends Command {
-  public TogglePusherSolenoidCommand() {
+  private boolean isPush;
+  public TogglePusherSolenoidCommand(boolean isPush) {
     // This command pushes hatch panels off of the slider and retracts automatically
     // eg. requires(chassis);
+    this.isPush = isPush;
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +27,12 @@ public class TogglePusherSolenoidCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(isPush){
+      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
+    }
+    else{
+      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
