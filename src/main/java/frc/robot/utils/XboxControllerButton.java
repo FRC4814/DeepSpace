@@ -17,7 +17,7 @@ import frc.robot.OI;
 public class XboxControllerButton extends JoystickButton {
   // For creating buttons and connecting them to the XboxController
 
-  // new way of doing it that might be easier
+  // new way of doing it that might be easier (currently in use but not tested yet)
   public XboxControllerButton(XboxButton buttonNumber) {
     super(OI.myController, buttonNumber.getValue());
   }

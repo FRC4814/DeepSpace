@@ -17,8 +17,7 @@ public class RobotMap{
   //used to map out the pins aka ports used by different parts of the robot
   //PWM
   public static final int[] leftMotors = {1, 2, 3};
-  //note two motors are connected to one port
-  public static final int[] rightMotors = {4, 5};
+  public static final int[] rightMotors = {4, 5}; // note two motors are connected to one port
   public static final int armPotentiometer = 0;
 
   //DIO

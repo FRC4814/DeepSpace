@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.DriveTrain;
 
 public class HaloDriveCommand extends Command{
     public HaloDriveCommand(){
@@ -14,7 +12,8 @@ public class HaloDriveCommand extends Command{
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        
+        // possibly could add something here in future to stop the slight 
+        // turning of the robot when it starts from rest
     }
 
     // Called repeatedly when this Command is scheduled to run

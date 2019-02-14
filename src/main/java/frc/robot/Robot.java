@@ -24,13 +24,17 @@ import frc.robot.utils.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static DriveTrain driveTrain = new DriveTrain();
   public static OI m_oi;
-  public static final Compressor compressor = new Compressor(0);
 
+  // drivetrain
+  public static DriveTrain driveTrain = new DriveTrain();
+
+  // pneumatics
+  public static final Compressor compressor = new Compressor(0);
   public static final DoubleSolenoid pusherSolenoid = new DoubleSolenoid(4, 5);
   public static final DoubleSolenoid sliderSolenoid = new DoubleSolenoid(6, 7);
 
+  // Auto variables
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -40,12 +44,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // Receiving input from controller
     m_oi = new OI();
+
+    // SmartDashboard things go here
     DashboardVariable.initDefaultVariables();
     CameraServer.getInstance().startAutomaticCapture();
-   // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+
+    // Initialize pneumatics
     compressor.setClosedLoopControl(true);
     pusherSolenoid.set(DoubleSolenoid.Value.kOff);
     sliderSolenoid.set(DoubleSolenoid.Value.kOff);
