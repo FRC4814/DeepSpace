@@ -43,6 +43,7 @@ public class OI {
       slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(false));
       slidePresetX.whileHeld(new ToggleSliderSolenoidCommand(true));
       pushPresetB.whenPressed(new TogglePusherSolenoidCommand(true));
+      pushPresetB.whenReleased(new TogglePusherSolenoidCommand(false));
       
     }
 

@@ -10,7 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.WaitCommand;
+
+import frc.robot.utils.wait;
 
 public class TogglePusherSolenoidCommand extends Command {
   private boolean isPush;
@@ -28,25 +29,19 @@ public class TogglePusherSolenoidCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-    /*
     if(isPush){
+      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+    else{//this is nano time!
       Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
     }
-    else{
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }*/
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.pusherSolenoid.get().equals(DoubleSolenoid.Value.kReverse)) {
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
-      return true;
-    }
 
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

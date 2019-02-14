@@ -12,6 +12,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.*;
 
@@ -116,6 +117,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     driveTrain.resetEncoders();
+    pusherSolenoid.set(DoubleSolenoid.Value.kForward);
+    sliderSolenoid.set(DoubleSolenoid.Value.kForward);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
