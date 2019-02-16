@@ -162,12 +162,14 @@ public class DriveTrain extends Subsystem{
                 Robot.driveTrain.m_myRobot.curvatureDrive(throttle/2,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
             }
         }
-        //checks if drive straight is on or off
-        if(driveStraightOn.get()){
-            Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
-        }
-        else{
-            Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
+        else {
+            //checks if drive straight is on or off
+            if(driveStraightOn.get()){
+                Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
+            }
+            else{
+                Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
+            }
         }
     }
 

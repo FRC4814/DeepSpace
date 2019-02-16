@@ -47,7 +47,15 @@ public class MovePIDArmCommand extends Command {
     // else (if startAngle > targetAngle) set onTarget to be true when the angle is 
     //  smaller than or equal to target
     onTarget = (startAngle < targetAngle) ? currentAngle >= targetAngle : currentAngle <= targetAngle;
+    
+    // if not yet onTarget, set the next setpoint/angle to be the currentAngle + delta
+    // else, set the next setpoint to be the targetAngle (in case it overshoots) 
+    if (!onTarget)
+      currentAngle += delta;
+    else
+      currentAngle = targetAngle;
 
+    // set the next location to move the arm motor such that the motion is continuous
     Robot.pidArm.setSetpoint(currentAngle);
   }
 
