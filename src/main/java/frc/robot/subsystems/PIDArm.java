@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.RobotMap;
@@ -32,12 +32,13 @@ public class PIDArm extends PIDSubsystem {
 
 
   // arm potentiometer
-  public static Potentiometer potentiometer = new AnalogPotentiometer(RobotMap.ARM_POTENTIOMETER, 3600, 0);
+  public Potentiometer potentiometer;
   // channel, full rotation degrees, offset (starting angle)
   // Potentiometer does 10 spins so 3600 degrees
 
   public PIDArm() {
     super("PID Arm", kP, kI, kD);
+    potentiometer = new AnalogPotentiometer(RobotMap.ARM_POTENTIOMETER, 3600, 0);
 
     // Insert a subsystem name and PID values here
     armMotors = new PWMVictorSPX[RobotMap.ARM_MOTORS.length];
@@ -47,6 +48,8 @@ public class PIDArm extends PIDSubsystem {
 			armMotors[i].setName(this.getName(), "Motor" + i);
 			armMotors[i].setInverted(true);
     }
+
+    potentiometer.setPIDSourceType(PIDSourceType.kDisplacement);
     
     // setSetpoint() - Sets where the PID controller should move the system
     // to
