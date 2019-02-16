@@ -72,9 +72,8 @@ public class DriveTrain extends Subsystem{
         rightGroup.setInverted(true);
         //initialize the drive train
         m_myRobot = new DifferentialDrive(leftGroup, rightGroup);
-                
-        
     }
+    
     public void startPID(){
         drivePIDLeft.enable();
         drivePIDRight.enable();
