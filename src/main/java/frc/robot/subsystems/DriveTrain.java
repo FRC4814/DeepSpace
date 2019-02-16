@@ -167,6 +167,7 @@ public class DriveTrain extends Subsystem{
             Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
         }
         else{
+            System.out.println("not slow");
             Robot.driveTrain.m_myRobot.curvatureDrive(throttle,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
         }
     }
