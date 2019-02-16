@@ -1,12 +1,18 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+
+
 public class HaloDriveCommand extends Command{
+    public boolean slow;
+
     public HaloDriveCommand(){
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
+        slow = Robot.m_oi.myController.getBumperPressed(Hand.kLeft);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +25,7 @@ public class HaloDriveCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.driveTrain.curvDrive();
+        Robot.driveTrain.curvDrive(slow);
         //DriveTrain.curvDrive(Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getY(Hand.kLeft));
     }
 

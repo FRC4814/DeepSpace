@@ -31,6 +31,7 @@ public class OI {
   // Joystick stick = new Joystick(port);
   public static CustomXboxController myController;
 
+  public Button slowPresetLB = new XboxControllerButton(myController, XboxButton.kBumperLeft);
 
     public OI(){
       myController = new CustomXboxController(RobotMap.controllerPort);
