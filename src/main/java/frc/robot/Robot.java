@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-    SmartDashboard.putNumber("Potentiometer Value", potentiometer.get());
+    SmartDashboard.putNumber("Potentiometer Value", Math.round(potentiometer.get()));
 
     // Initialize pneumatics
     compressor.setClosedLoopControl(true);
@@ -79,6 +79,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // degrees of potentiometer
     //System.out.println(potentiometer.get());
+    SmartDashboard.putNumber("Potentiometer Value", Math.round(potentiometer.get()));
   }
 
   /**

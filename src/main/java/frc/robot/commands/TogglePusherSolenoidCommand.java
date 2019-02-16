@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-import frc.robot.utils.wait;
-
 public class TogglePusherSolenoidCommand extends Command {
   private boolean isPush;
   public TogglePusherSolenoidCommand(boolean isPush) {
