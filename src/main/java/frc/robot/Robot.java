@@ -7,15 +7,13 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.command.*;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.PIDArm;
 import frc.robot.utils.*;
 
 /**
@@ -32,7 +30,8 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
 
   // potentiometer values
-  public static Potentiometer potentiometer = new AnalogPotentiometer(0, 3600, 0);
+  // public static Potentiometer potentiometer = new AnalogPotentiometer(0, 3600, 0);
+  public static PIDArm pidArm = new PIDArm();
 
   // pneumatics
   public static final Compressor compressor = new Compressor(0);
@@ -58,7 +57,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-    SmartDashboard.putNumber("Potentiometer Value", Math.round(potentiometer.get()));
+    SmartDashboard.putNumber("Potentiometer Value", Math.round(pidArm.potentiometer.get()));
 
     // Initialize pneumatics
     compressor.setClosedLoopControl(true);
@@ -79,7 +78,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // degrees of potentiometer
     //System.out.println(potentiometer.get());
-    SmartDashboard.putNumber("Potentiometer Value", Math.round(potentiometer.get()));
+    SmartDashboard.putNumber("Potentiometer Value", Math.round(pidArm.potentiometer.get()));
   }
 
   /**
