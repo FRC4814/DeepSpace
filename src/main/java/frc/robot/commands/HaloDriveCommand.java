@@ -7,12 +7,11 @@ import frc.robot.Robot;
 
 
 public class HaloDriveCommand extends Command{
-    public boolean slow;
 
     public HaloDriveCommand(){
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
-        slow = Robot.m_oi.myController.getBumperPressed(Hand.kLeft);
+        
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +24,8 @@ public class HaloDriveCommand extends Command{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.driveTrain.curvDrive(slow);
+        //Robot.m_oi.myController.getBumper(Hand.kLeft);
+        Robot.driveTrain.curvDrive();
         //DriveTrain.curvDrive(Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getY(Hand.kLeft));
     }
 

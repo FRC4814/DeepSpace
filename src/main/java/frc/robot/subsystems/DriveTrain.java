@@ -142,20 +142,23 @@ public class DriveTrain extends Subsystem{
         setDefaultCommand(new HaloDriveCommand());
     }
 
-    public static void curvDrive(boolean slow){
+    public static void curvDrive(){
         //creates and inits the throttle and quickturn variables for quick turn logic
         double throttle = Robot.m_oi.myController.getY(Hand.kLeft);
         boolean isQuickTurn = false;
+        boolean slow = Robot.m_oi.myController.getBumper(Hand.kLeft);
         //quick turn logic
-        if(Math.abs(throttle)<0.3 || Robot.m_oi.myController.getBumper(Hand.kLeft)){
+        if(Math.abs(throttle)<0.3){
             isQuickTurn = true;
         }
+        //slows the max speed for more accuracy
         if(slow){
              //checks if drive straight is on or off
             if(driveStraightOn.get()){
                 Robot.driveTrain.m_myRobot.curvatureDrive(throttle/2,-Robot.m_oi.myController.getX(Hand.kRight) * drivestraightPercent(), isQuickTurn);
             }
             else{
+                System.out.println("slow");
                 Robot.driveTrain.m_myRobot.curvatureDrive(throttle/2,-Robot.m_oi.myController.getX(Hand.kRight),isQuickTurn);
             }
         }
