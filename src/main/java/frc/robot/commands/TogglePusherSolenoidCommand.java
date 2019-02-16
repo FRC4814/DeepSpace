@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-<<<<<<< HEAD
 import frc.robot.utils.wait;
 
 public class TogglePusherSolenoidCommand extends Command {
@@ -19,13 +18,6 @@ public class TogglePusherSolenoidCommand extends Command {
   public TogglePusherSolenoidCommand(boolean isPush) {
     // This command pushes hatch panels off of the slider and retracts automatically
     // eg. requires(chassis);
-=======
-
-public class TogglePusherSolenoidCommand extends Command {
-  public boolean isPush;
-  public TogglePusherSolenoidCommand(boolean isPush) {
-    // This command pushes hatch panels off of the slider and retracts automatically
->>>>>>> e81ce94d80188c89a214565f2cc55423f68cd0dd
     this.isPush = isPush;
   }
 

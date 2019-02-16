@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // degrees of potentiometer
-    System.out.println(potentiometer.get());
+    //System.out.println(potentiometer.get());
   }
 
   /**
