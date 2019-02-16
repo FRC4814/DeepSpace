@@ -9,6 +9,7 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.HaloDriveCommand;
 import frc.robot.commands.TogglePusherSolenoidCommand;
@@ -35,15 +36,14 @@ public class OI {
       myController = new CustomXboxController(RobotMap.controllerPort);
       myController.setDeadzone(0.2);
 
-      Button pushPresetB = new XboxControllerButton(myController, XboxButton.kButtonB);
+      Button pushPresetRB = new XboxControllerButton(myController, XboxButton.kBumperRight);
       Button slidePresetA = new XboxControllerButton(myController, XboxButton.kButtonA);
       Button slidePresetX = new XboxControllerButton(myController, XboxButton.kButtonX);
-      Button pushPresetY = new XboxControllerButton(myController, XboxButton.kButtonY);
 
       slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(false));
       slidePresetX.whileHeld(new ToggleSliderSolenoidCommand(true));
-      pushPresetB.whenPressed(new TogglePusherSolenoidCommand(true));
-      pushPresetB.whenReleased(new TogglePusherSolenoidCommand(false));
+      pushPresetRB.whenPressed(new TogglePusherSolenoidCommand(true));
+      pushPresetRB.whenReleased(new TogglePusherSolenoidCommand(false));
       
     }
 
