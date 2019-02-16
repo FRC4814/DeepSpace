@@ -43,7 +43,7 @@ public class DriveTrain extends Subsystem{
         distancePerPulse = (wheelSize * Math.PI) / (pulsesPerRev);
 
         //initialize the encoders
-        leftEnc = new Encoder(RobotMap.leftEncoders[0], RobotMap.leftEncoders[1], false, Encoder.EncodingType.k4X);
+        leftEnc = new Encoder(RobotMap.LEFT_ENCODERS[0], RobotMap.LEFT_ENCODERS[1], false, Encoder.EncodingType.k4X);
         leftEnc.setName(this.getName(), "EncoderL");
 		leftEnc.setPIDSourceType(PIDSourceType.kDisplacement);
 		leftEnc.setMaxPeriod(0.2);
@@ -52,7 +52,7 @@ public class DriveTrain extends Subsystem{
 		leftEnc.setSamplesToAverage(7);
         leftEnc.reset();
     
-        rightEnc = new Encoder(RobotMap.rightEncoders[0], RobotMap.rightEncoders[1], false, Encoder.EncodingType.k4X);
+        rightEnc = new Encoder(RobotMap.RIGHT_ENCODERS[0], RobotMap.RIGHT_ENCODERS[1], false, Encoder.EncodingType.k4X);
         rightEnc.setName(this.getName(), "EncoderR");
 		rightEnc.setPIDSourceType(PIDSourceType.kDisplacement);
 		rightEnc.setMaxPeriod(0.2);
@@ -62,8 +62,8 @@ public class DriveTrain extends Subsystem{
         rightEnc.reset();
         
         // links the 3 left motor controllers together, and 2 right motor controllers together
-        SpeedControllerGroup leftGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.leftMotors[0]),new PWMVictorSPX(RobotMap.leftMotors[1]), new PWMVictorSPX(RobotMap.leftMotors[2]));
-        SpeedControllerGroup rightGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.rightMotors[0]), new PWMVictorSPX(RobotMap.rightMotors[1]));
+        SpeedControllerGroup leftGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.LEFT_MOTORS[0]),new PWMVictorSPX(RobotMap.LEFT_MOTORS[1]), new PWMVictorSPX(RobotMap.LEFT_MOTORS[2]));
+        SpeedControllerGroup rightGroup = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.RIGHT_MOTORS[0]), new PWMVictorSPX(RobotMap.RIGHT_MOTORS[1]));
         drivePIDLeft = new PIDController(0.02, 0.0, 0.02, leftEnc, leftGroup);
         drivePIDRight = new PIDController(0.02, 0.0, 0.02, rightEnc, rightGroup);
 

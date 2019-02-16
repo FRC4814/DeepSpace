@@ -7,8 +7,10 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,6 +30,9 @@ public class Robot extends TimedRobot {
 
   // drivetrain
   public static DriveTrain driveTrain = new DriveTrain();
+
+  // potentiometer values
+  public static Potentiometer potentiometer = new AnalogPotentiometer(0, 3600, 0);
 
   // pneumatics
   public static final Compressor compressor = new Compressor(0);
@@ -58,6 +63,7 @@ public class Robot extends TimedRobot {
     compressor.setClosedLoopControl(true);
     pusherSolenoid.set(DoubleSolenoid.Value.kOff);
     sliderSolenoid.set(DoubleSolenoid.Value.kOff);
+
   }
 
   /**
@@ -70,6 +76,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    // degrees of potentiometer
+    System.out.println(potentiometer.get());
   }
 
   /**
