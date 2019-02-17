@@ -31,7 +31,7 @@ public class DriveTrain extends Subsystem{
     //drive straight variables
     public double speedL, speedR, speedMod = 1.0;
     public boolean onTarget;
-    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", true);
+    public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>("drive straight", false);
     
     //entering the P, I, and D variables to dashboard
     public static final DashboardVariable<Double> driveP = new DashboardVariable<Double>("DriveP", 0.02);

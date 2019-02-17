@@ -135,8 +135,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     driveTrain.resetEncoders();
-    pusherSolenoid.set(DoubleSolenoid.Value.kForward);
-    sliderSolenoid.set(DoubleSolenoid.Value.kForward);
+    pusherSolenoid.set(DoubleSolenoid.Value.kOff);
+    sliderSolenoid.set(DoubleSolenoid.Value.kOff);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
