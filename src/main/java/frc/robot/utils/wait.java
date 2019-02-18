@@ -1,17 +1,18 @@
 package frc.robot.utils;
 
-public class wait{
+public class Wait {
 
     double time = 10;
-    public static boolean timer(double time){
+
+    public static boolean timer(double time) {
         double deltaTime = 0;
         double prevTime = System.nanoTime();
-        
-        if(deltaTime < time ){
+
+        if (deltaTime < time) {
             deltaTime += System.nanoTime() - prevTime;
         }
-        
-        if(deltaTime >= time){
+
+        if (deltaTime >= time) {
             return true;
         }
 
@@ -19,8 +20,8 @@ public class wait{
 
     }
 
-    public static void reset(double deltaTime){
-        deltaTime=0;
+    public static void reset(double deltaTime) {
+        deltaTime = 0;
     }
 
 }
