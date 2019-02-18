@@ -1,15 +1,21 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    ".classpath": true,
-    ".project": true
-  },
-  "wpilib.online": true,
-  "editor.formatOnSave": true
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"bin/": true,
+		".classpath": true,
+		".project": true
+	},
+	"wpilib.online": true,
+	"editor.formatOnSave": true,
+	"editor.tabSize": 3,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"java.saveActions.organizeImports": true,
+	"java.format.enabled": true,
+	"java.format.settings.url": "format-settings.xml",
 }
