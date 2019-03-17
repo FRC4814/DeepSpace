@@ -7,11 +7,11 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.HaloDriveCommand;
+import frc.robot.commands.MovePIDArmCommand;
 import frc.robot.commands.TogglePusherSolenoidCommand;
 import frc.robot.commands.ToggleSliderSolenoidCommand;
 import frc.robot.utils.CustomXboxController;
@@ -22,52 +22,42 @@ import frc.robot.utils.XboxControllerButton;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {
-  //// CREATING BUTTNS
-  // One type of button is a joystick button which is any button on a
-  //// joystick.
-  // You create one by telling it which joystick it's on and which button
-  // number it is.
-  // Joystick stick = new Joystick(port);
-  public static CustomXboxController myController;
+public class OI
+{
+	//// CREATING BUTTNS
+	// One type of button is a joystick button which is any button on a
+	//// joystick.
+	// You create one by telling it which joystick it's on and which button
+	// number it is.
+	// Joystick stick = new Joystick(port);
+	public static CustomXboxController myController;
 
-  public Button slowPresetLB = new XboxControllerButton(myController, XboxButton.kBumperLeft);
+	public Button slowPresetLB = new XboxControllerButton( myController, XboxButton.kBumperLeft );
 
-    public OI(){
-      myController = new CustomXboxController(RobotMap.controllerPort);
-      myController.setDeadzone(0.2);
+	public OI()
+	{
+		myController = new CustomXboxController( RobotMap.controllerPort );
+		myController.setDeadzone( 0.2 );
 
-      Button pushPresetRB = new XboxControllerButton(myController, XboxButton.kBumperRight);
-      Button slidePresetA = new XboxControllerButton(myController, XboxButton.kButtonA);
-      Button slidePresetX = new XboxControllerButton(myController, XboxButton.kButtonX);
+		Button pushPresetRB = new XboxControllerButton( myController, XboxButton.kBumperRight );
+		// private Button slidePresetA = new XboxControllerButton( myController,
+		// XboxButton.kButtonA );
+		// private Button slidePresetX = new XboxControllerButton( myController,
+		// XboxButton.kButtonX );
 
-      slidePresetA.whileHeld(new ToggleSliderSolenoidCommand(false));
-      slidePresetX.whileHeld(new ToggleSliderSolenoidCommand(true));
-      pushPresetRB.whenPressed(new TogglePusherSolenoidCommand(true));
-      pushPresetRB.whenReleased(new TogglePusherSolenoidCommand(false));
-      
-    }
+		Button armPreset_Floor = new XboxControllerButton( myController, XboxButton.kButtonA );
+		Button armPreset_Cargo = new XboxControllerButton( myController, XboxButton.kButtonX );
+		Button armPreset_Rocket = new XboxControllerButton( myController, XboxButton.kButtonB );
+		Button armPreset_Default = new XboxControllerButton( myController, XboxButton.kButtonY );
+		// slidePresetA.whileHeld( new ToggleSliderSolenoidCommand( false ) );
+		// slidePresetX.whileHeld( new ToggleSliderSolenoidCommand( true ) );
 
-    
-  // Button button = new JoystickButton(stick, buttonNumber);
+		pushPresetRB.whenPressed( new TogglePusherSolenoidCommand( true ) );
+		pushPresetRB.whenReleased( new TogglePusherSolenoidCommand( false ) );
 
-  // There are a few additional built in buttons you can use. Additionally,
-  // by subclassing Button you can create custom triggers and bind those to
-  // commands the same as any other Button.
-
-  //// TRIGGERING COMMANDS WITH BUTTONS
-  // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
-
-  // Start the command when the button is pressed and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenPressed(new ExampleCommand());
-
-  // Run the command while the button is being held down and interrupt it once
-  // the button is released.
-  // button.whileHeld(new ExampleCommand());
-
-  // Start the command when the button is released and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
+		armPreset_Floor.whenPressed( new MovePIDArmCommand( Robot.armFloorPosition.get() ) );
+		armPreset_Cargo.whenPressed( new MovePIDArmCommand( Robot.armCargoPosition.get() ) );
+		armPreset_Rocket.whenPressed( new MovePIDArmCommand( Robot.armRocketPosition.get() ) );
+		armPreset_Default.whenPressed( new MovePIDArmCommand( Robot.armDefaultPosition.get() ) );
+	}
 }
