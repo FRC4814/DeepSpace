@@ -19,7 +19,6 @@ import frc.robot.utils.XboxButton;
 import frc.robot.utils.XboxControllerButton;
 import frc.robot.utils.DPadButton.Direction;
 import frc.robot.utils.DPadButton;
-import frc.robot.commands.MoveArmCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -66,7 +65,5 @@ public class OI
 		armPreset_Rocket.whenPressed( new MovePIDArmCommand( Robot.armRocketPosition.get() ) );
 		armPreset_Default.whenPressed( new MovePIDArmCommand( Robot.armDefaultPosition.get() ) );
 
-		DPadUp.whileHeld( new MoveArmCommand( true, false ) );
-		DPadUp.whileHeld( new MoveArmCommand( false, true ) );
 	}
 }

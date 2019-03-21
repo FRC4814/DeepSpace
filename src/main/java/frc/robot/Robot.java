@@ -36,10 +36,10 @@ public class Robot extends TimedRobot
 	public static final DashboardVariable<Double> driveI = new DashboardVariable<Double>( "DriveI", 0.02 );
 	public static final DashboardVariable<Double> driveD = new DashboardVariable<Double>( "DriveD", 0.02 );
 
-	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", 1614.0 );
-	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 1780.0 );
-	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 1711.0 );
-	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 1880.0 );
+	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", 1540.0 );
+	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 1706.0 );
+	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 1637.0 );
+	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 1806.0 );
 
 	// potentiometer values
 	// public static Potentiometer potentiometer = new AnalogPotentiometer(0, 3600,

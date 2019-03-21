@@ -24,9 +24,9 @@ public class PIDArm extends PIDSubsystem
 	 * Add your docs here.
 	 */
 	// PID values
-	static final double kP = 0.005;
-	static final double kI = 0.0001;
-	static final double kD = 0.0005;
+	static final double kP = 0.0025;
+	static final double kI = 0.00003;
+	static final double kD = 0.0000;
 
 	public boolean pidEnabled = true;
 
@@ -59,7 +59,7 @@ public class PIDArm extends PIDSubsystem
 
 		setAbsoluteTolerance( 0.2 );
 		getPIDController().setContinuous( false );
-		getPIDController().setInputRange( 1614.0, 1900.0 );
+		getPIDController().setInputRange( 1540.0, 1900.0 );
 
 		enableSpeedLimit( true );
 	}
