@@ -60,8 +60,8 @@ public class MovePIDArmCommand extends Command
 		// else, set the next setpoint to be the targetAngle (in case it overshoots)
 		if ( !onTarget )
 			currentAngle += delta;
-		else
-			currentAngle = targetAngle;
+		// else
+		// 	currentAngle = targetAngle;
 
 		// set the next location to move the arm motor such that the motion is
 		// continuous

@@ -17,6 +17,9 @@ import frc.robot.commands.ToggleSliderSolenoidCommand;
 import frc.robot.utils.CustomXboxController;
 import frc.robot.utils.XboxButton;
 import frc.robot.utils.XboxControllerButton;
+import frc.robot.utils.DPadButton.Direction;
+import frc.robot.utils.DPadButton;
+import frc.robot.commands.MoveArmCommand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,6 +52,9 @@ public class OI
 		Button armPreset_Cargo = new XboxControllerButton( myController, XboxButton.kButtonX );
 		Button armPreset_Rocket = new XboxControllerButton( myController, XboxButton.kButtonB );
 		Button armPreset_Default = new XboxControllerButton( myController, XboxButton.kButtonY );
+
+		Button DPadUp = new DPadButton( myController, Direction.Up );
+		Button DPadDown = new DPadButton( myController, Direction.Down );
 		// slidePresetA.whileHeld( new ToggleSliderSolenoidCommand( false ) );
 		// slidePresetX.whileHeld( new ToggleSliderSolenoidCommand( true ) );
 
@@ -59,5 +65,8 @@ public class OI
 		armPreset_Cargo.whenPressed( new MovePIDArmCommand( Robot.armCargoPosition.get() ) );
 		armPreset_Rocket.whenPressed( new MovePIDArmCommand( Robot.armRocketPosition.get() ) );
 		armPreset_Default.whenPressed( new MovePIDArmCommand( Robot.armDefaultPosition.get() ) );
+
+		DPadUp.whileHeld( new MoveArmCommand( true, false ) );
+		DPadUp.whileHeld( new MoveArmCommand( false, true ) );
 	}
 }
