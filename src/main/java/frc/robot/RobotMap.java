@@ -19,13 +19,16 @@ public class RobotMap
 	// PWM
 	public static final int[] LEFT_MOTORS = { 1, 2, 3 };
 	public static final int[] RIGHT_MOTORS = { 4, 5 }; // note two motors are connected to one port
-	public static final int ARM_POTENTIOMETER = 0;
 	public static final int[] ARM_MOTORS = { 7 };
 	public static final int INTAKE_MOTOR = 9;
+
+	//analogue
+	public static final int ARM_POTENTIOMETER = 0;
 
 	// DIO
 	public static final int[] LEFT_ENCODERS = { 0, 1 };
 	public static final int[] RIGHT_ENCODERS = { 2, 3 };
+	public static final int limitSwitch = 4;
 
 	// USB
 	public static final int controllerPort = 0;

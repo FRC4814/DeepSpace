@@ -7,9 +7,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.PIDArm;
 
 public class MovePIDArmCommand extends Command
 {
@@ -18,10 +20,15 @@ public class MovePIDArmCommand extends Command
 	double currentAngle;
 	double speed = 50.0;
 	boolean onTarget;
+	boolean climb;
+	boolean usePID;
 
-	public MovePIDArmCommand( double targetAngle )
+	public MovePIDArmCommand( double targetAngle, boolean climb, boolean usePID )
 	{
 		this.targetAngle = targetAngle;
+		this.usePID = usePID;
+		this.climb = climb;
+
 		// Use requires() here to declare subsystem dependencies
 		requires( Robot.pidArm );
 	}
@@ -33,39 +40,57 @@ public class MovePIDArmCommand extends Command
 		startAngle = Robot.pidArm.potentiometer.get();
 		currentAngle = startAngle;
 		onTarget = false;
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		currentAngle = Robot.pidArm.potentiometer.get();
 
-		// calculates the difference between the startSetpoint and targetSetpoint.
-		// If startAngle < targetAngle, set speed as positive (keep going in this
-		// direction)
-		// else, set speed as negative (reverse direction)
-		double delta = ( startAngle < targetAngle ) ? speed : -speed;
+		//if you are not climbing use PID
+		if ( !climb )
+		{
 
-		// Tells the program when the setpoint has been achieved.
-		// if startAngle < targetAngle, set onTarget to be true (end program) when the
-		// angle
-		// is greater than or equal to the target
-		// else (if startAngle > targetAngle) set onTarget to be true when the angle is
-		// smaller than or equal to target
-		onTarget = ( startAngle < targetAngle ) ? currentAngle >= targetAngle : currentAngle <= targetAngle;
+			currentAngle = Robot.pidArm.potentiometer.get();
 
-		// if not yet onTarget, set the next setpoint/angle to be the currentAngle +
-		// delta
-		// else, set the next setpoint to be the targetAngle (in case it overshoots)
-		if ( !onTarget )
-			currentAngle += delta;
+			// calculates the difference between the startSetpoint and targetSetpoint.
+			// If startAngle < targetAngle, set speed as positive (keep going in this
+			// direction)
+			// else, set speed as negative (reverse direction)
+			double delta = ( startAngle < targetAngle ) ? speed : -speed;
+
+			// Tells the program when the setpoint has been achieved.
+			// if startAngle < targetAngle, set onTarget to be true (end program) when the
+			// angle
+			// is greater than or equal to the target
+			// else (if startAngle > targetAngle) set onTarget to be true when the angle is
+			// smaller than or equal to target
+			onTarget = ( startAngle < targetAngle ) ? currentAngle >= targetAngle : currentAngle <= targetAngle;
+
+			// if not yet onTarget, set the next setpoint/angle to be the currentAngle +
+			// delta
+			// else, set the next setpoint to be the targetAngle (in case it overshoots)
+			if ( !onTarget )
+				currentAngle += delta;
+			else
+				currentAngle = targetAngle;
+
+			// set the next location to move the arm motor such that the motion is
+			// continuous
+			Robot.pidArm.setSetpoint( currentAngle );
+		}
 		else
-			currentAngle = targetAngle;
-
-		// set the next location to move the arm motor such that the motion is
-		// continuous
-		Robot.pidArm.setSetpoint( currentAngle );
+		{
+			if ( Robot.pidArm.limitSwitch.get() )
+			{
+				Robot.pidArm.manualMove( -1 );
+			}
+			else
+			{
+				onTarget = true;
+			}
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

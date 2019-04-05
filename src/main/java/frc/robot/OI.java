@@ -7,11 +7,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.commands.HaloDriveCommand;
+import frc.robot.commands.MoveArmCommand;
 import frc.robot.commands.MovePIDArmCommand;
+import frc.robot.commands.ToggleClimberSolenoidCommand;
 import frc.robot.commands.TogglePusherSolenoidCommand;
 import frc.robot.commands.ToggleSliderSolenoidCommand;
 import frc.robot.utils.CustomXboxController;
@@ -32,38 +31,44 @@ public class OI
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 	// Joystick stick = new Joystick(port);
-	public static CustomXboxController myController;
+	public static CustomXboxController myController = new CustomXboxController( RobotMap.controllerPort );;
 
 	public Button slowPresetLB = new XboxControllerButton( myController, XboxButton.kBumperLeft );
 
+	private Button pushPresetRB = new XboxControllerButton( myController, XboxButton.kBumperRight );
+	private Button slidePreset = new DPadButton( myController, Direction.Left );
+
+	private Button armPreset_Floor = new XboxControllerButton( myController, XboxButton.kButtonA );
+	private Button armPreset_Cargo = new XboxControllerButton( myController, XboxButton.kButtonX );
+	private Button armPreset_Rocket = new XboxControllerButton( myController, XboxButton.kButtonB );
+	private Button armPreset_Default = new XboxControllerButton( myController, XboxButton.kButtonY );
+
+	private Button armPreset_Climb = new XboxControllerButton( myController, XboxButton.kButtonStart );
+	private Button climb_Piston = new XboxControllerButton( myController, XboxButton.kButtonBack );
+
+	private Button DPadUp = new DPadButton( myController, Direction.Up );
+	private Button DPadDown = new DPadButton( myController, Direction.Down );
+
 	public OI()
 	{
-		myController = new CustomXboxController( RobotMap.controllerPort );
 		myController.setDeadzone( 0.2 );
 
-		Button pushPresetRB = new XboxControllerButton( myController, XboxButton.kBumperRight );
-		// private Button slidePresetA = new XboxControllerButton( myController,
-		// XboxButton.kButtonA );
-		// private Button slidePresetX = new XboxControllerButton( myController,
-		// XboxButton.kButtonX );
-
-		Button armPreset_Floor = new XboxControllerButton( myController, XboxButton.kButtonA );
-		Button armPreset_Cargo = new XboxControllerButton( myController, XboxButton.kButtonX );
-		Button armPreset_Rocket = new XboxControllerButton( myController, XboxButton.kButtonB );
-		Button armPreset_Default = new XboxControllerButton( myController, XboxButton.kButtonY );
-
-		Button DPadUp = new DPadButton( myController, Direction.Up );
-		Button DPadDown = new DPadButton( myController, Direction.Down );
-		// slidePresetA.whileHeld( new ToggleSliderSolenoidCommand( false ) );
+		slidePreset.whenPressed( new ToggleSliderSolenoidCommand() );
 		// slidePresetX.whileHeld( new ToggleSliderSolenoidCommand( true ) );
 
 		pushPresetRB.whenPressed( new TogglePusherSolenoidCommand( true ) );
 		pushPresetRB.whenReleased( new TogglePusherSolenoidCommand( false ) );
 
-		armPreset_Floor.whenPressed( new MovePIDArmCommand( Robot.armFloorPosition.get() ) );
-		armPreset_Cargo.whenPressed( new MovePIDArmCommand( Robot.armCargoPosition.get() ) );
-		armPreset_Rocket.whenPressed( new MovePIDArmCommand( Robot.armRocketPosition.get() ) );
-		armPreset_Default.whenPressed( new MovePIDArmCommand( Robot.armDefaultPosition.get() ) );
+		DPadUp.whileHeld( new MoveArmCommand( true, false ) );
+		DPadDown.whileHeld( new MoveArmCommand( false, true ) );
+
+		armPreset_Floor.whenPressed( new MovePIDArmCommand( Robot.armFloorPosition.get(), false, true ) );
+		armPreset_Cargo.whenPressed( new MovePIDArmCommand( Robot.armCargoPosition.get(), false, true ) );
+		armPreset_Rocket.whenPressed( new MovePIDArmCommand( Robot.armRocketPosition.get(), false, true ) );
+		armPreset_Default.whenPressed( new MovePIDArmCommand( Robot.armDefaultPosition.get(), false, true ) );
+
+		armPreset_Climb.whileHeld( new MovePIDArmCommand( Robot.armClimbPosition.get(), true, true ) );
+		climb_Piston.whenPressed( new ToggleClimberSolenoidCommand() );
 
 	}
 }

@@ -11,44 +11,61 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ToggleSliderSolenoidCommand extends Command {
-  private boolean isSlide;
-  public ToggleSliderSolenoidCommand(boolean isSlide) {
-    //This command pushes the hatch panel slider forward and/or back and locks it in place
-    this.isSlide = isSlide;
-  }
+public class ToggleSliderSolenoidCommand extends Command
+{
+	private boolean isSlid;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
+	public ToggleSliderSolenoidCommand()
+	{
+		//This command pushes the hatch panel slider forward and/or back and locks it in place
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    if(isSlide){
-      Robot.sliderSolenoid.set(DoubleSolenoid.Value.kForward);
-    }
-    else{
-      Robot.sliderSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
 
-    }
-  }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize()
+	{
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute()
+	{
+		if ( Robot.isSlid.get() )
+		{
+			Robot.sliderSolenoid.set( DoubleSolenoid.Value.kReverse );
+			Robot.isSlid.set( false );
+		}
+		else
+		{
+			Robot.sliderSolenoid.set( DoubleSolenoid.Value.kForward );
+			Robot.isSlid.set( true );
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+		}
+	}
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
+		// if ( isSlid != Robot.isSlid.get() )
+		// {
+		// 	Robot.isSlid.set( isSlid );
+		// 	return true;
+		// }
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	@Override
+	protected void end()
+	{
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted()
+	{
+	}
 }

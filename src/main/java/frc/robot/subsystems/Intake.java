@@ -29,6 +29,7 @@ public class Intake extends Subsystem
 
 	public void setSpeed( double speed )
 	{
-		intakeMotor.setSpeed( speed );
+		//multiplied to reduce speed
+		intakeMotor.setSpeed( speed * 0.8 );
 	}
 }

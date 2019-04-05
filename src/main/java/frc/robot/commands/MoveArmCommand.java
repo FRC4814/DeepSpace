@@ -2,15 +2,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.PIDArm;
 
-public class HaloDriveCommand extends Command
+public class MoveArmCommand extends Command
 {
+	private boolean up, down;
 
-	public HaloDriveCommand()
+	public MoveArmCommand( boolean up, boolean down )
 	{
 		// Use requires() here to declare subsystem dependencies
-		requires( Robot.driveTrain );
-
+		requires( Robot.pidArm );
+		this.up = up;
 	}
 
 	// Called just before this Command runs the first time
@@ -25,9 +27,14 @@ public class HaloDriveCommand extends Command
 	@Override
 	protected void execute()
 	{
-		//Robot.m_oi.myController.getBumper(Hand.kLeft);
-		Robot.driveTrain.curvDrive();
-		//DriveTrain.curvDrive(Robot.m_oi.myController.getX(Hand.kRight), Robot.m_oi.myController.getY(Hand.kLeft));
+		if ( up )
+		{
+			Robot.pidArm.manualMove( 0.3 );
+		}
+		if ( down )
+		{
+			Robot.pidArm.manualMove( -0.3 );
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -41,7 +48,6 @@ public class HaloDriveCommand extends Command
 	@Override
 	protected void end()
 	{
-		Robot.driveTrain.m_myRobot.tankDrive( 0, 0 );
 	}
 
 	// Called when another command which requires one or more of the same

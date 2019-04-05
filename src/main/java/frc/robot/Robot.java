@@ -36,10 +36,16 @@ public class Robot extends TimedRobot
 	public static final DashboardVariable<Double> driveI = new DashboardVariable<Double>( "DriveI", 0.02 );
 	public static final DashboardVariable<Double> driveD = new DashboardVariable<Double>( "DriveD", 0.02 );
 
-	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", 1540.0 );
-	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 1706.0 );
-	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 1637.0 );
-	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 1806.0 );
+	//presets for the arm
+	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", -21.0 );
+	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 65.0 );
+	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 42.0 );
+	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 120.0 );
+
+	public static final DashboardVariable<Double> armClimbPosition = new DashboardVariable<Double>( "PIDArm (Climb)", -21.0 );
+
+	public static DashboardVariable<Boolean> isSlid = new DashboardVariable<Boolean>( "Slid", false );
+	public static DashboardVariable<Boolean> isClimb = new DashboardVariable<Boolean>( "Climb", false );
 
 	// potentiometer values
 	// public static Potentiometer potentiometer = new AnalogPotentiometer(0, 3600,
@@ -52,6 +58,8 @@ public class Robot extends TimedRobot
 	public static final Compressor compressor = new Compressor( 0 );
 	public static final DoubleSolenoid pusherSolenoid = new DoubleSolenoid( 4, 5 );
 	public static final DoubleSolenoid sliderSolenoid = new DoubleSolenoid( 6, 7 );
+	public static final DoubleSolenoid climberSolenoid1 = new DoubleSolenoid( 0, 1 );
+	public static final DoubleSolenoid climberSolenoid2 = new DoubleSolenoid( 2, 3 );
 
 	// Auto variables
 	Command m_autonomousCommand;
@@ -79,6 +87,8 @@ public class Robot extends TimedRobot
 		compressor.setClosedLoopControl( true );
 		pusherSolenoid.set( DoubleSolenoid.Value.kOff );
 		sliderSolenoid.set( DoubleSolenoid.Value.kOff );
+		climberSolenoid1.set( DoubleSolenoid.Value.kOff );
+		climberSolenoid2.set( DoubleSolenoid.Value.kOff );
 	}
 
 	/**
@@ -162,8 +172,10 @@ public class Robot extends TimedRobot
 		driveTrain.resetEncoders();
 		pusherSolenoid.set( DoubleSolenoid.Value.kOff );
 		sliderSolenoid.set( DoubleSolenoid.Value.kOff );
+		climberSolenoid1.set( DoubleSolenoid.Value.kOff );
+		climberSolenoid2.set( DoubleSolenoid.Value.kOff );
 
-		pidArm.setSetpoint( armDefaultPosition.get() );
+		pidArm.setSetpoint( armFloorPosition.get() );
 		pidArm.enable();
 
 		// This makes sure that the autonomous stops running when
