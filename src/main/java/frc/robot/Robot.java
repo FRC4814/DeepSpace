@@ -17,6 +17,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PIDArm;
 import frc.robot.utils.*;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +30,8 @@ public class Robot extends TimedRobot
 {
 	public static OI m_oi;
 
+	public static PowerDistributionPanel panel;
+
 	// drivetrain
 	public static DriveTrain driveTrain = new DriveTrain();
 	// entering the P, I, and D variables to dashboard
@@ -38,9 +41,9 @@ public class Robot extends TimedRobot
 
 	//presets for the arm
 	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", -21.0 );
-	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 65.0 );
-	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 42.0 );
-	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 120.0 );
+	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 60.0 );
+	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 20.0 );
+	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 110.0 );
 
 	public static final DashboardVariable<Double> armClimbPosition = new DashboardVariable<Double>( "PIDArm (Climb)", -21.0 );
 
@@ -75,6 +78,8 @@ public class Robot extends TimedRobot
 		// Receiving input from controller
 		m_oi = new OI();
 
+		panel = new PowerDistributionPanel();
+
 		// SmartDashboard things go here
 		DashboardVariable.initDefaultVariables();
 		CameraServer.getInstance().startAutomaticCapture();
@@ -104,7 +109,6 @@ public class Robot extends TimedRobot
 	public void robotPeriodic()
 	{
 		// degrees of potentiometer
-		// System.out.println(potentiometer.get());
 		SmartDashboard.putNumber( "Potentiometer Value", Math.round( pidArm.potentiometer.get() ) );
 	}
 
@@ -195,6 +199,7 @@ public class Robot extends TimedRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
+
 	}
 
 	/**

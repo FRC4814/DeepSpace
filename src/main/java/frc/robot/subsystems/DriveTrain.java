@@ -35,8 +35,10 @@ public class DriveTrain extends Subsystem
 	public static final DashboardVariable<Boolean> driveStraightOn = new DashboardVariable<Boolean>( "drive straight", false );
 
 	public double prevThrottle;
+	public double prevturn;
 
-	private static final double speedCap = 0.09;
+	private static final double speedCap = 0.08;
+	private static final double speedCapTurn = 0.02;
 
 	public DriveTrain()
 	{
@@ -76,6 +78,7 @@ public class DriveTrain extends Subsystem
 		m_myRobot = new DifferentialDrive( leftGroup, rightGroup );
 
 		prevThrottle = 0.0;
+		prevturn = 0.0;
 	}
 
 	public void startPID()
@@ -103,17 +106,17 @@ public class DriveTrain extends Subsystem
 		rightEnc.reset();
 	}
 
-	public static double getLeftError()
-	{
-		double leftError = leftEnc.getDistance() - rightEnc.getDistance();
-		return leftError;
-	}
+	// public static double getLeftError()
+	// {
+	// 	double leftError = leftEnc.getDistance() - rightEnc.getDistance();
+	// 	return leftError;
+	// }
 
-	public static double getRightError()
-	{
-		double rightError = rightEnc.getDistance() - leftEnc.getDistance();
-		return rightError;
-	}
+	// public static double getRightError()
+	// {
+	// 	double rightError = rightEnc.getDistance() - leftEnc.getDistance();
+	// 	return rightError;
+	// }
 
 	@Override
 	public void initDefaultCommand()
@@ -126,8 +129,29 @@ public class DriveTrain extends Subsystem
 	{
 		// creates and inits the throttle and quickturn variables for quick turn logic
 		double throttle = Robot.m_oi.myController.getY( Hand.kLeft );
+		double turn = Robot.m_oi.myController.getX( Hand.kRight );
 		boolean isQuickTurn = false;
 		boolean slow = Robot.m_oi.myController.getBumper( Hand.kLeft );
+		boolean pastCurrentThreshold = false;
+
+		for ( int i = 0; i < RobotMap.driveMotors.length; i++ )
+		{
+			if ( Robot.panel.getCurrent( RobotMap.driveMotors[i] ) > 35 )
+			{
+				pastCurrentThreshold = true;
+			}
+		}
+
+		if ( Robot.panel.getVoltage() < 8 )
+		{
+			throttle = throttle * 0.6;
+			turn = turn * 0.6;
+		}
+
+		if ( pastCurrentThreshold )
+		{
+			throttle = throttle * 0.7;
+		}
 
 		if ( Math.abs( throttle - Robot.driveTrain.prevThrottle ) > speedCap )
 		{
@@ -146,7 +170,22 @@ public class DriveTrain extends Subsystem
 
 		}
 		Robot.driveTrain.prevThrottle = throttle;
-		System.out.println( throttle );
+		// if ( ( Math.abs( turn ) - Robot.driveTrain.prevturn ) > speedCapTurn )
+		// {
+		// 	if ( turn > 0.0 )
+		// 	{
+		// 		turn = Robot.driveTrain.prevturn + speedCapTurn;
+		// 	}
+		// 	else if ( turn < 0.0 )
+		// 	{
+		// 		turn = Robot.driveTrain.prevturn - speedCapTurn;
+		// 	}
+		// 	else
+		// 	{
+		// 		turn = 0;
+		// 	}
+		// }
+		// Robot.driveTrain.prevturn = turn;
 
 		// quick turn logic
 		if ( Math.abs( throttle ) < 0.3 )
@@ -159,11 +198,11 @@ public class DriveTrain extends Subsystem
 			// checks if drive straight is on or off
 			if ( driveStraightOn.get() )
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, Robot.m_oi.myController.getX( Hand.kRight ), isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, ( turn * 0.7 ) / 3, isQuickTurn );
 			}
 			else
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, Robot.m_oi.myController.getX( Hand.kRight ), isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, ( turn * 0.7 ) / 3, isQuickTurn );
 			}
 		}
 		else
@@ -171,13 +210,12 @@ public class DriveTrain extends Subsystem
 			// checks if drive straight is on or off
 			if ( driveStraightOn.get() )
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, Robot.m_oi.myController.getX( Hand.kRight ), isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn * 0.7, isQuickTurn );
 			}
 			else
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, Robot.m_oi.myController.getX( Hand.kRight ), isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn * 0.7, isQuickTurn );
 			}
 		}
 	}
-
 }

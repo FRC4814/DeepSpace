@@ -32,4 +32,7 @@ public class RobotMap
 
 	// USB
 	public static final int controllerPort = 0;
+
+	//PDP
+	public static final int[] driveMotors = { 0, 1, 2, 3, 13, 14 };
 }

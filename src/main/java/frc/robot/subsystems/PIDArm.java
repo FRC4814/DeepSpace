@@ -26,22 +26,21 @@ public class PIDArm extends PIDSubsystem
 	 * Add your docs here.
 	 */
 	// PID values
-	static DashboardVariable<Double> kP = new DashboardVariable<Double>( "kP", 0.005 ); //OG 0.0025 new 0.004 //0.0031 after waterloo 0.005
+	static DashboardVariable<Double> kP = new DashboardVariable<Double>( "kP", 0.0055 ); //OG 0.0025 new 0.004 //0.0031 after waterloo 0.005
 	static DashboardVariable<Double> kI = new DashboardVariable<Double>( "kI", 0.00005 ); //OG 0.00003 new 0.00015 //0.00009 after waterloo 0.00005
-	static DashboardVariable<Double> kD = new DashboardVariable<Double>( "kD", 0.0006 );//OG 0.0000 new 0.0013 //0.018 after waterloo 0.0006
-	static DashboardVariable<Double> kF = new DashboardVariable<Double>( "kF", 0.004 ); //0.00015 after waterloo 0.004
+	static DashboardVariable<Double> kD = new DashboardVariable<Double>( "kD", 0.0062 );//OG 0.0000 new 0.0013 //0.018 after waterloo 0.0006
+	static DashboardVariable<Double> kF = new DashboardVariable<Double>( "kF", 0.06 ); //0.00015 after waterloo 0.004
 
+	//used to adjust pot if not correct
 	public DigitalInput limitSwitch = new DigitalInput( RobotMap.limitSwitch );
-	double offset = -945;
+	double offset = -1038;
 	double delta;
 
 	public boolean pidEnabled = true;
 
-	public PWMVictorSPX[] armMotors;
-
 	// arm potentiometer
 	public Potentiometer potentiometer;
-	SpeedControllerGroup armMotorsTest;
+	SpeedControllerGroup armMotors;
 	// channel, full rotation degrees, offset (starting angle)
 	// Potentiometer does 10 spins so 3600 degrees
 
@@ -50,14 +49,14 @@ public class PIDArm extends PIDSubsystem
 
 		super( "PID Arm", kP.get(), kI.get(), kD.get() );
 		potentiometer = new AnalogPotentiometer( RobotMap.ARM_POTENTIOMETER, 1800, offset );
-		if ( limitSwitch.get() )
-		{
-			delta = potentiometer.get() - 21;
-			offset -= delta;
-		}
+		// if ( limitSwitch.get() )
+		// {
+		// 	delta = potentiometer.get() - 21;
+		// 	offset -= delta;
+		// }
 
-		armMotorsTest = new SpeedControllerGroup( new PWMVictorSPX( RobotMap.ARM_MOTORS[0] ) );
-		armMotorsTest.setInverted( true );
+		armMotors = new SpeedControllerGroup( new PWMVictorSPX( RobotMap.ARM_MOTORS[0] ) );
+		armMotors.setInverted( true );
 
 		// Insert a subsystem name and PID values here
 		// armMotors = new PWMVictorSPX[RobotMap.ARM_MOTORS.length];
@@ -111,11 +110,11 @@ public class PIDArm extends PIDSubsystem
 	protected void usePIDOutput( double output )
 	{
 		//kF used to account for gravity based on the angle of the arm
-		armMotorsTest.set( output + kF.get() * Math.cos( potentiometer.get() ) );
+		armMotors.set( output + kF.get() * Math.cos( potentiometer.get() ) );
 	}
 
 	public void manualMove( double speed )
 	{
-		armMotorsTest.set( speed );
+		armMotors.set( speed );
 	}
 }

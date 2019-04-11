@@ -82,14 +82,8 @@ public class MovePIDArmCommand extends Command
 		}
 		else
 		{
-			if ( Robot.pidArm.limitSwitch.get() )
-			{
-				Robot.pidArm.manualMove( -1 );
-			}
-			else
-			{
-				onTarget = true;
-			}
+			Robot.pidArm.manualMove( -1 );
+
 		}
 	}
 

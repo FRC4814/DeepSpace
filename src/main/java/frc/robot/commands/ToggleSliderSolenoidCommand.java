@@ -15,32 +15,30 @@ public class ToggleSliderSolenoidCommand extends Command
 {
 	private boolean isSlid;
 
-	public ToggleSliderSolenoidCommand()
+	public ToggleSliderSolenoidCommand( boolean isSlid )
 	{
 		//This command pushes the hatch panel slider forward and/or back and locks it in place
-
+		this.isSlid = isSlid;
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize()
 	{
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute()
 	{
-		if ( Robot.isSlid.get() )
+		if ( isSlid )
 		{
 			Robot.sliderSolenoid.set( DoubleSolenoid.Value.kReverse );
-			Robot.isSlid.set( false );
 		}
-		else
+		else if ( !isSlid )
 		{
 			Robot.sliderSolenoid.set( DoubleSolenoid.Value.kForward );
-			Robot.isSlid.set( true );
-
 		}
 	}
 
@@ -48,12 +46,7 @@ public class ToggleSliderSolenoidCommand extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		// if ( isSlid != Robot.isSlid.get() )
-		// {
-		// 	Robot.isSlid.set( isSlid );
-		// 	return true;
-		// }
-		return false;
+		return true;
 	}
 
 	// Called once after isFinished returns true

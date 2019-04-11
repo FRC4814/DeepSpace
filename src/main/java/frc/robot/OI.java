@@ -36,7 +36,8 @@ public class OI
 	public Button slowPresetLB = new XboxControllerButton( myController, XboxButton.kBumperLeft );
 
 	private Button pushPresetRB = new XboxControllerButton( myController, XboxButton.kBumperRight );
-	private Button slidePreset = new DPadButton( myController, Direction.Left );
+	private Button slidePresetIn = new DPadButton( myController, Direction.Left );
+	private Button slidePresetOut = new DPadButton( myController, Direction.Right );
 
 	private Button armPreset_Floor = new XboxControllerButton( myController, XboxButton.kButtonA );
 	private Button armPreset_Cargo = new XboxControllerButton( myController, XboxButton.kButtonX );
@@ -53,8 +54,8 @@ public class OI
 	{
 		myController.setDeadzone( 0.2 );
 
-		slidePreset.whenPressed( new ToggleSliderSolenoidCommand() );
-		// slidePresetX.whileHeld( new ToggleSliderSolenoidCommand( true ) );
+		slidePresetIn.whenPressed( new ToggleSliderSolenoidCommand( false ) );
+		slidePresetOut.whenReleased( new ToggleSliderSolenoidCommand( true ) );
 
 		pushPresetRB.whenPressed( new TogglePusherSolenoidCommand( true ) );
 		pushPresetRB.whenReleased( new TogglePusherSolenoidCommand( false ) );

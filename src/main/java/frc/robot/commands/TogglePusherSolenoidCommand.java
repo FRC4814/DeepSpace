@@ -11,45 +11,55 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TogglePusherSolenoidCommand extends Command {
-  private boolean isPush;
-  public TogglePusherSolenoidCommand(boolean isPush) {
-    // This command pushes hatch panels off of the slider and retracts automatically
-    // eg. requires(chassis);
-    this.isPush = isPush;
-  }
+public class TogglePusherSolenoidCommand extends Command
+{
+	private boolean isPush;
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
+	public TogglePusherSolenoidCommand( boolean isPush )
+	{
+		// This command pushes hatch panels off of the slider and retracts automatically
+		// eg. requires(chassis);
+		this.isPush = isPush;
+	}
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    if(isPush){
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }
-    else{//this is nano time!
-      Robot.pusherSolenoid.set(DoubleSolenoid.Value.kForward);
-    }
-  }
+	// Called just before this Command runs the first time
+	@Override
+	protected void initialize()
+	{
+	}
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
+	// Called repeatedly when this Command is scheduled to run
+	@Override
+	protected void execute()
+	{
+		if ( isPush )
+		{
+			Robot.pusherSolenoid.set( DoubleSolenoid.Value.kReverse );
+		}
+		else
+		{
+			Robot.pusherSolenoid.set( DoubleSolenoid.Value.kForward );
+		}
+	}
 
-    return true;
-  }
+	// Make this return true when this Command no longer needs to run execute()
+	@Override
+	protected boolean isFinished()
+	{
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
+		return true;
+	}
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
+	// Called once after isFinished returns true
+	@Override
+	protected void end()
+	{
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	@Override
+	protected void interrupted()
+	{
+	}
 }
