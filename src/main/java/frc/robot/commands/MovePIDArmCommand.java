@@ -40,6 +40,7 @@ public class MovePIDArmCommand extends Command
 		startAngle = Robot.pidArm.potentiometer.get();
 		currentAngle = startAngle;
 		onTarget = false;
+		Robot.useArmPID.set( true );
 
 	}
 
@@ -47,43 +48,45 @@ public class MovePIDArmCommand extends Command
 	@Override
 	protected void execute()
 	{
-
-		//if you are not climbing use PID
-		if ( !climb )
+		if ( Robot.useArmPID.get() )
 		{
+			//if you are not climbing use PID
+			if ( !climb )
+			{
 
-			currentAngle = Robot.pidArm.potentiometer.get();
+				currentAngle = Robot.pidArm.potentiometer.get();
 
-			// calculates the difference between the startSetpoint and targetSetpoint.
-			// If startAngle < targetAngle, set speed as positive (keep going in this
-			// direction)
-			// else, set speed as negative (reverse direction)
-			double delta = ( startAngle < targetAngle ) ? speed : -speed;
+				// calculates the difference between the startSetpoint and targetSetpoint.
+				// If startAngle < targetAngle, set speed as positive (keep going in this
+				// direction)
+				// else, set speed as negative (reverse direction)
+				double delta = ( startAngle < targetAngle ) ? speed : -speed;
 
-			// Tells the program when the setpoint has been achieved.
-			// if startAngle < targetAngle, set onTarget to be true (end program) when the
-			// angle
-			// is greater than or equal to the target
-			// else (if startAngle > targetAngle) set onTarget to be true when the angle is
-			// smaller than or equal to target
-			onTarget = ( startAngle < targetAngle ) ? currentAngle >= targetAngle : currentAngle <= targetAngle;
+				// Tells the program when the setpoint has been achieved.
+				// if startAngle < targetAngle, set onTarget to be true (end program) when the
+				// angle
+				// is greater than or equal to the target
+				// else (if startAngle > targetAngle) set onTarget to be true when the angle is
+				// smaller than or equal to target
+				onTarget = ( startAngle < targetAngle ) ? currentAngle >= targetAngle : currentAngle <= targetAngle;
 
-			// if not yet onTarget, set the next setpoint/angle to be the currentAngle +
-			// delta
-			// else, set the next setpoint to be the targetAngle (in case it overshoots)
-			if ( !onTarget )
-				currentAngle += delta;
+				// if not yet onTarget, set the next setpoint/angle to be the currentAngle +
+				// delta
+				// else, set the next setpoint to be the targetAngle (in case it overshoots)
+				if ( !onTarget )
+					currentAngle += delta;
+				else
+					currentAngle = targetAngle;
+
+				// set the next location to move the arm motor such that the motion is
+				// continuous
+				Robot.pidArm.setSetpoint( currentAngle );
+			}
 			else
-				currentAngle = targetAngle;
+			{
+				Robot.pidArm.manualMove( -1 );
 
-			// set the next location to move the arm motor such that the motion is
-			// continuous
-			Robot.pidArm.setSetpoint( currentAngle );
-		}
-		else
-		{
-			Robot.pidArm.manualMove( -1 );
-
+			}
 		}
 	}
 

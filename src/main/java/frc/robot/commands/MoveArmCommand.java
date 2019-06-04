@@ -20,6 +20,7 @@ public class MoveArmCommand extends Command
 	@Override
 	protected void initialize()
 	{
+		Robot.useArmPID.set( false );
 		// possibly could add something here in future to stop the slight 
 		// turning of the robot when it starts from rest
 	}
@@ -42,6 +43,11 @@ public class MoveArmCommand extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		if ( !up && !down )
+		{
+			Robot.useArmPID.set( true );
+			return true;
+		}
 		return false;
 	}
 

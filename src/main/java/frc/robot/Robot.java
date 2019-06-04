@@ -39,11 +39,13 @@ public class Robot extends TimedRobot
 	public static final DashboardVariable<Double> driveI = new DashboardVariable<Double>( "DriveI", 0.02 );
 	public static final DashboardVariable<Double> driveD = new DashboardVariable<Double>( "DriveD", 0.02 );
 
+	public static final DashboardVariable<Boolean> useArmPID = new DashboardVariable<Boolean>( "useArmPID", true );
+
 	//presets for the arm
 	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", -21.0 );
 	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 60.0 );
-	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 20.0 );
-	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 110.0 );
+	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 25.0 );
+	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 112.0 );
 
 	public static final DashboardVariable<Double> armClimbPosition = new DashboardVariable<Double>( "PIDArm (Climb)", -21.0 );
 
@@ -174,12 +176,8 @@ public class Robot extends TimedRobot
 	public void teleopInit()
 	{
 		driveTrain.resetEncoders();
-		pusherSolenoid.set( DoubleSolenoid.Value.kOff );
-		sliderSolenoid.set( DoubleSolenoid.Value.kOff );
-		climberSolenoid1.set( DoubleSolenoid.Value.kOff );
-		climberSolenoid2.set( DoubleSolenoid.Value.kOff );
 
-		pidArm.setSetpoint( armFloorPosition.get() );
+		pidArm.setSetpoint( armDefaultPosition.get() );
 		pidArm.enable();
 
 		// This makes sure that the autonomous stops running when

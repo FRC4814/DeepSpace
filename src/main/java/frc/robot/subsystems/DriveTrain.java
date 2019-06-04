@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem
 	public double prevThrottle;
 	public double prevturn;
 
-	private static final double speedCap = 0.08;
+	private static final double speedCap = 0.04;//sest to 0.8 for commps, set to 0.04 for shows
 	private static final double speedCapTurn = 0.02;
 
 	public DriveTrain()
