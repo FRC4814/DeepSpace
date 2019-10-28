@@ -23,6 +23,9 @@ public class DriveTrain extends Subsystem
 	public DifferentialDrive m_myRobot;
 	public static PIDController drivePIDLeft, drivePIDRight;
 
+	//guest mode
+	public static DashboardVariable<Boolean> guest = new DashboardVariable<Boolean>( "guest mode", false );
+
 	// curve drive variables
 	public final static Double wheelNonLinearity = 0.65;
 	public final static int wheelDistance = 23;
@@ -83,8 +86,7 @@ public class DriveTrain extends Subsystem
 
 	public void startPID()
 	{
-		drivePIDLeft.enable();
-		drivePIDRight.enable();
+
 	}
 
 	public void updatePID()
@@ -95,15 +97,13 @@ public class DriveTrain extends Subsystem
 
 	public void disablePID()
 	{
-		drivePIDLeft.disable();
-		drivePIDRight.disable();
+
 	}
 
 	// resets encoders (duh)
 	public void resetEncoders()
 	{
-		leftEnc.reset();
-		rightEnc.reset();
+
 	}
 
 	// public static double getLeftError()
@@ -151,6 +151,7 @@ public class DriveTrain extends Subsystem
 		if ( pastCurrentThreshold )
 		{
 			throttle = throttle * 0.7;
+			turn = turn * 0.5;
 		}
 
 		if ( Math.abs( throttle - Robot.driveTrain.prevThrottle ) > speedCap )
@@ -193,16 +194,16 @@ public class DriveTrain extends Subsystem
 			isQuickTurn = true;
 		}
 		// slows the max speed for more accuracy
-		if ( slow )
+		if ( slow || guest.get() )
 		{
 			// checks if drive straight is on or off
 			if ( driveStraightOn.get() )
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, ( turn * 0.7 ) / 3, isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle * 0.25, ( turn * 0.5 ), isQuickTurn );
 			}
 			else
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle / 3, ( turn * 0.7 ) / 3, isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle * 0.25, ( turn * 0.5 ), isQuickTurn );
 			}
 		}
 		else
@@ -210,11 +211,11 @@ public class DriveTrain extends Subsystem
 			// checks if drive straight is on or off
 			if ( driveStraightOn.get() )
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn * 0.7, isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn, isQuickTurn );
 			}
 			else
 			{
-				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn * 0.7, isQuickTurn );
+				Robot.driveTrain.m_myRobot.curvatureDrive( throttle, turn, isQuickTurn );
 			}
 		}
 	}

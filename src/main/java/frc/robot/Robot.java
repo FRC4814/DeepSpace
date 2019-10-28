@@ -42,12 +42,12 @@ public class Robot extends TimedRobot
 	public static final DashboardVariable<Boolean> useArmPID = new DashboardVariable<Boolean>( "useArmPID", true );
 
 	//presets for the arm
-	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", -21.0 );
-	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 60.0 );
+	public static final DashboardVariable<Double> armFloorPosition = new DashboardVariable<Double>( "PIDArm (Floor)", -16.5 );
+	public static final DashboardVariable<Double> armCargoPosition = new DashboardVariable<Double>( "PIDArm (Cargo)", 65.0 );
 	public static final DashboardVariable<Double> armRocketPosition = new DashboardVariable<Double>( "PIDArm (Rocket)", 25.0 );
 	public static final DashboardVariable<Double> armDefaultPosition = new DashboardVariable<Double>( "PIDArm (Default)", 112.0 );
 
-	public static final DashboardVariable<Double> armClimbPosition = new DashboardVariable<Double>( "PIDArm (Climb)", -21.0 );
+	public static final DashboardVariable<Double> armClimbPosition = new DashboardVariable<Double>( "PIDArm (Climb)", -25.0 );
 
 	public static DashboardVariable<Boolean> isSlid = new DashboardVariable<Boolean>( "Slid", false );
 	public static DashboardVariable<Boolean> isClimb = new DashboardVariable<Boolean>( "Climb", false );

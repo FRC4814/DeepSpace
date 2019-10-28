@@ -26,14 +26,14 @@ public class PIDArm extends PIDSubsystem
 	 * Add your docs here.
 	 */
 	// PID values
-	static DashboardVariable<Double> kP = new DashboardVariable<Double>( "kP", 0.0088 ); //OG 0.0025 new 0.004 //0.0031 after waterloo 0.005
-	static DashboardVariable<Double> kI = new DashboardVariable<Double>( "kI", 0.00005 ); //OG 0.00003 new 0.00015 //0.00009 after waterloo 0.00005
-	static DashboardVariable<Double> kD = new DashboardVariable<Double>( "kD", 0.0033 );//OG 0.0000 new 0.0013 //0.018 after waterloo 0.0006
-	static DashboardVariable<Double> kF = new DashboardVariable<Double>( "kF", 0.1 ); //0.00015 after waterloo 0.004
+	static DashboardVariable<Double> kP = new DashboardVariable<Double>( "kP", 0.0063 ); //OG 0.0025 new 0.004 //0.0031 after waterloo 0.005
+	static DashboardVariable<Double> kI = new DashboardVariable<Double>( "kI", 0.000019 ); //OG 0.00003 new 0.00015 //0.00009 after waterloo 0.00005
+	static DashboardVariable<Double> kD = new DashboardVariable<Double>( "kD", 0.0069 );//OG 0.0000 new 0.0013 //0.018 after waterloo 0.0006
+	static DashboardVariable<Double> kF = new DashboardVariable<Double>( "kF", 0.15 ); //0.00015 after waterloo 0.004
 
-	//used to adjust pot if not correct
+	//used to adjust pot if not correc
 	//ublic DigitalInput limitSwitch = new DigitalInput( RobotMap.limitSwitch );
-	double offset = -970;
+	double offset = -937;
 	double delta;
 
 	public boolean pidEnabled = true;
@@ -73,9 +73,9 @@ public class PIDArm extends PIDSubsystem
 		// to
 		// enable() - Enables the PID controller.
 
-		setAbsoluteTolerance( 0.22 );
+		setAbsoluteTolerance( 0.18 );
 		getPIDController().setContinuous( false );
-		getPIDController().setInputRange( -30.0, 250.0 );
+		getPIDController().setInputRange( -32.0, 250.0 );
 
 		enableSpeedLimit( true );
 	}

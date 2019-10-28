@@ -60,8 +60,8 @@ public class OI
 		pushPresetRB.whenPressed( new TogglePusherSolenoidCommand( true ) );
 		pushPresetRB.whenReleased( new TogglePusherSolenoidCommand( false ) );
 
-		DPadUp.whileHeld( new MoveArmCommand( true, false ) );
-		DPadDown.whileHeld( new MoveArmCommand( false, true ) );
+		// DPadUp.whileHeld( new MoveArmCommand( true, false ) );
+		// DPadDown.whileHeld( new MoveArmCommand( false, true ) );
 
 		armPreset_Floor.whenPressed( new MovePIDArmCommand( Robot.armFloorPosition.get(), false, true ) );
 		armPreset_Cargo.whenPressed( new MovePIDArmCommand( Robot.armCargoPosition.get(), false, true ) );
